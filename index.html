@@ -1035,34 +1035,46 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .services .service:first-of-type{ margin-top: 72px; }
 .services-tabs{
   display: inline-flex;
-  gap: 4px;
+  gap: 8px;
   margin-top: 56px;
-  padding: 4px;
+  padding: 5px;
   border: 1px solid var(--rule);
   border-radius: 999px;
   background: var(--paper-3);
 }
 .services-tab{
   appearance: none;
-  border: 0;
   background: transparent;
   font: inherit;
-  color: var(--ink-2);
-  padding: 10px 20px;
+  color: var(--ink);
+  padding: 13px 26px;
   border-radius: 999px;
   cursor: pointer;
   letter-spacing: -0.005em;
-  font-size: 14.5px;
-  transition: background 180ms ease, color 180ms ease;
+  font-size: 16px;
+  border: 1px solid var(--rule);
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
-.services-tab:hover{ color: var(--ink); }
+.services-tab:hover{ color: var(--ink); border-color: var(--ink-3); }
 .services-tab.is-active{
   background: var(--ink);
   color: var(--paper);
+  border-color: var(--ink);
 }
 .services-tab:focus-visible{
   outline: 2px solid var(--clay);
   outline-offset: 2px;
+}
+@keyframes services-tab-pulse{
+  0%   { box-shadow: 0 0 0 0   color-mix(in srgb, var(--clay) 45%, transparent); }
+  50%  { box-shadow: 0 0 0 8px color-mix(in srgb, var(--clay) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0   color-mix(in srgb, var(--clay) 0%, transparent); }
+}
+.services-tab.is-pulsing:not(.is-active){
+  animation: services-tab-pulse 1s ease-out 3;
+}
+@media (prefers-reduced-motion: reduce){
+  .services-tab.is-pulsing:not(.is-active){ animation: none; }
 }
 .services-panel[hidden]{ display: none; }
 .services-panel .service:first-of-type{ margin-top: 32px; }
@@ -1984,6 +1996,23 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <li data-i18n="svc2.b6">Globally consistent release execution</li>
         </ul>
       </article>
+
+      <article class="service service--icon-lead" data-reveal>
+        <div class="service-icon service-icon--lead" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/><path d="m7.5 5.5 9 5"/></svg>
+        </div>
+        <div class="service-head">
+          <h3 data-i18n="svc4.h">Physical Publishing &amp; Boxed Editions</h3>
+          <p data-i18n="svc4.p">Disc, cart, box, art book. Working with retail distributors, replication houses, and rating boards to put a physical edition on store shelves &mdash; without burning the project.</p>
+        </div>
+        <ul>
+          <li data-i18n="svc4.b1">Distributor relationships (US, EU, JP regions)</li>
+          <li data-i18n="svc4.b2">Replication &amp; manufacturing coordination</li>
+          <li data-i18n="svc4.b3">Physical SKU planning</li>
+          <li data-i18n="svc4.b4">ESRB / PEGI / CERO age rating submissions</li>
+          <li data-i18n="svc4.b5">Production timeline &amp; disc/cart deadlines</li>
+        </ul>
+      </article>
     </div>
 
     <div class="services-panel" id="tab-publishers" role="tabpanel" aria-labelledby="tabbtn-publishers" hidden>
@@ -2333,6 +2362,14 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     'svc3.b3': 'Pitch deck shaping e review per fundraising & deal',
     'svc3.b4': 'Publisher demo prep & feedback',
     'svc3.b5': 'Deal milestone & schedule sanity check',
+
+    'svc4.h': 'Physical Publishing & Edizioni Fisiche',
+    'svc4.p': 'Disco, cartuccia, scatola, art book. Lavoro con distributori retail, replication house e rating board per mettere un’edizione fisica sugli scaffali — senza bruciare il progetto.',
+    'svc4.b1': 'Relazioni con distributori (US, EU, JP)',
+    'svc4.b2': 'Coordinamento replication & manufacturing',
+    'svc4.b3': 'Pianificazione SKU fisici',
+    'svc4.b4': 'Submission rating ESRB / PEGI / CERO',
+    'svc4.b5': 'Timeline di produzione & deadline disc/cart',
 
     'svcP2.h': 'External Production Oversight',
     'svcP2.p': 'Un producer dal tuo lato del tavolo. Milestone, scope e rischi tracciati attraverso gli studio firmati, così che le sorprese emergano presto, non al Portfolio Review.',
@@ -2796,16 +2833,46 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
       });
     }
     tabs.forEach(t => {
-      t.addEventListener('click', () => activate(t.dataset.tabTarget));
+      t.addEventListener('click', () => { stopPulse(); activate(t.dataset.tabTarget); });
       t.addEventListener('keydown', (e) => {
         if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
         e.preventDefault();
         const i = tabs.indexOf(t);
         const next = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
         tabs[next].focus();
+        stopPulse();
         activate(tabs[next].dataset.tabTarget);
       });
     });
+
+    // Pulse the inactive tab when the tab strip enters the viewport (3 cycles, ~3s)
+    const tabsRoot = document.querySelector('.services-tabs');
+    let pulseTimer = null;
+    function startPulse(){
+      tabs.forEach(t => { if (!t.classList.contains('is-active')) t.classList.add('is-pulsing'); });
+      clearTimeout(pulseTimer);
+      pulseTimer = setTimeout(stopPulse, 3100);
+    }
+    function stopPulse(){
+      clearTimeout(pulseTimer);
+      pulseTimer = null;
+      tabs.forEach(t => t.classList.remove('is-pulsing'));
+    }
+    if (tabsRoot && 'IntersectionObserver' in window){
+      let pulsed = false;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !pulsed && !document.hidden){
+            pulsed = true;
+            startPulse();
+          } else if (!e.isIntersecting){
+            stopPulse();
+          }
+        });
+      }, { threshold: 0.6 });
+      io.observe(tabsRoot);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) stopPulse(); });
+    }
   })();
 
   // Cursor-following tooltips on marquee tiles (custom, no animation pause, no native dwell)
