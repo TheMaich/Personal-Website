@@ -2852,5 +2852,44 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 })();
 </script>
 
+<script>
+/* Geo-personalised placeholders for name & company (Cloudflare /cdn-cgi/trace) */
+(async function() {
+  const placeholders = {
+    IT: { name: 'Alessia Morandi', company: 'Driftline Studios' },
+    US: { name: 'Jordan Reeves', company: 'Hollow Pine Games' },
+    GB: { name: 'Owen Mitchell', company: 'Cliffside Games' },
+    DE: { name: 'Lena Hoffmann', company: 'Nordwald Studios' },
+    FR: { name: 'Camille Lefèvre', company: 'Atelier Sept' },
+    ES: { name: 'Marina Vega', company: 'Solana Games' },
+    SE: { name: 'Astrid Lindberg', company: 'Frostlake Games' }
+  };
+  const defaultPlaceholder = { name: 'Sam Carter', company: 'Driftline Studios' };
+
+  try {
+    const response = await fetch('/cdn-cgi/trace', { cache: 'no-store' });
+    if (!response.ok) throw new Error('trace fetch failed');
+    const text = await response.text();
+    const match = text.match(/^loc=([A-Z]{2})$/m);
+    const country = match ? match[1] : null;
+    const data = (country && placeholders[country]) || defaultPlaceholder;
+
+    const nameInput = document.querySelector('#f-name');
+    const companyInput = document.querySelector('#f-company');
+
+    if (nameInput) {
+      nameInput.placeholder = data.name;
+      nameInput.removeAttribute('data-i18n-placeholder');
+    }
+    if (companyInput) {
+      companyInput.placeholder = data.company;
+      companyInput.removeAttribute('data-i18n-placeholder');
+    }
+  } catch (err) {
+    console.debug('Geo placeholder fallback:', err.message);
+  }
+})();
+</script>
+
 </body>
 </html>
