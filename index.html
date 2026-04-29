@@ -1125,13 +1125,15 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .process-rail{
   margin-top: 64px;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2px;
   background: var(--rule);
   border: 1px solid var(--rule);
   border-radius: 14px;
   overflow: hidden;
   position: relative;
+  max-width: 760px;
+  margin-inline: auto;
 }
 .step{
   background: var(--paper-3);
