@@ -1079,6 +1079,27 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 @media (prefers-reduced-motion: reduce){
   .services-tab.is-pulsing:not(.is-active){ animation: none; }
 }
+@media (max-width: 768px){
+  .services-tabs{
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .services-tab{
+    flex: 1 1 50%;
+    min-width: 0;
+    padding: 12px 16px;
+    font-size: 14px;
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+@media (max-width: 480px){
+  .services-tab{
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
 .services-panel[hidden]{ display: none; }
 .services-panel .service:first-of-type{ margin-top: 32px; }
 .service:last-child{ border-bottom: 1px solid var(--rule); }
@@ -1282,7 +1303,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   .faq-item:nth-child(odd){ border-right: 0; padding-right: 0; }
   .faq-item:nth-child(even){ padding-left: 0; }
 }
-.faq-body h3{
+.faq-item h3{
   font-family: var(--serif);
   font-weight: 500;
   font-size: clamp(20px, 1.8vw, 26px);
@@ -1294,7 +1315,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   text-wrap: balance;
   transition: color .25s var(--ease);
 }
-.faq-body p{
+.faq-item p{
   margin: 0;
   color: var(--ink-2);
   font-size: 15.5px;
@@ -1302,7 +1323,38 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   max-width: 42ch;
 }
 .faq-item:hover{ background: color-mix(in srgb, var(--clay) 5%, transparent); }
-.faq-item:hover .faq-body h3{ color: var(--clay); }
+.faq-item:hover h3{ color: var(--clay); }
+.faq-item > summary{
+  list-style: none;
+  display: block;
+}
+.faq-item > summary::-webkit-details-marker{ display: none; }
+.faq-item > summary::marker{ display: none; }
+@media (min-width: 769px){
+  .faq-item > summary{ cursor: default; pointer-events: none; }
+}
+@media (max-width: 768px){
+  .faq-item{ padding: 14px 0; }
+  .faq-item > summary{
+    cursor: pointer;
+    position: relative;
+    padding-right: 32px;
+  }
+  .faq-item > summary::after{
+    content: '+';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--clay);
+    line-height: 1;
+  }
+  .faq-item[open] > summary::after{ content: '\2212'; }
+  .faq-item h3{ margin: 0; }
+  .faq-item p{ margin-top: 12px; }
+}
 @media (max-width: 760px){
   .faq-grid{ grid-template-columns: 1fr; }
 }
@@ -2105,42 +2157,42 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     </div>
 
     <div class="faq-grid" data-reveal>
-      <div class="faq-item">
-        <div class="faq-body">
+      <details class="faq-item" open>
+        <summary>
           <h3 data-i18n="faq1.q">How do you charge? Project, retainer, or audit?</h3>
-          <p data-i18n="faq1.a">Three formats. Projects for defined deliverables: a cert pass, a workflow audit, a publisher demo prep. Retainers for ongoing producer support, billed monthly. Audits for short, focused diagnostics, usually one to two weeks. We agree the format on the discovery call, once I understand what you actually need.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-body">
+        </summary>
+        <p data-i18n="faq1.a">Three formats. Projects for defined deliverables: a cert pass, a workflow audit, a publisher demo prep. Retainers for ongoing producer support, billed monthly. Audits for short, focused diagnostics, usually one to two weeks. We agree the format on the discovery call, once I understand what you actually need.</p>
+      </details>
+      <details class="faq-item" open>
+        <summary>
           <h3 data-i18n="faq2.q">Do you sign NDAs before a discovery call?</h3>
-          <p data-i18n="faq2.a">Happy to sign your standard NDA before the call if your project warrants it. For most early conversations, a verbal &ldquo;this stays between us&rdquo; is enough. I&rsquo;ve been around the industry long enough to know how to keep my mouth shut.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-body">
+        </summary>
+        <p data-i18n="faq2.a">Happy to sign your standard NDA before the call if your project warrants it. For most early conversations, a verbal &ldquo;this stays between us&rdquo; is enough. I&rsquo;ve been around the industry long enough to know how to keep my mouth shut.</p>
+      </details>
+      <details class="faq-item" open>
+        <summary>
           <h3 data-i18n="faq3.q">Who keeps the IP, the documentation, the processes after you leave?</h3>
-          <p data-i18n="faq3.a">You do. Everything I produce, from schedules and GDD reviews to pipelines and cert prep, is yours. The whole point of the engagement is that the value stays with you, not with me.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-body">
+        </summary>
+        <p data-i18n="faq3.a">You do. Everything I produce, from schedules and GDD reviews to pipelines and cert prep, is yours. The whole point of the engagement is that the value stays with you, not with me.</p>
+      </details>
+      <details class="faq-item" open>
+        <summary>
           <h3 data-i18n="faq4.q">What&rsquo;s the smallest engagement you take?</h3>
-          <p data-i18n="faq4.a">A two-hour paid consultation if you just need a sanity check on a specific decision. Below that, the discovery call itself is free: half an hour, no pitch.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-body">
+        </summary>
+        <p data-i18n="faq4.a">A two-hour paid consultation if you just need a sanity check on a specific decision. Below that, the discovery call itself is free: half an hour, no pitch.</p>
+      </details>
+      <details class="faq-item" open>
+        <summary>
           <h3 data-i18n="faq5.q">Can you co-source vendors? Porting, external QA, audio, localisation?</h3>
-          <p data-i18n="faq5.a">Yes. Nine years in the industry built a network of trusted studios, porting houses, QA partners, audio teams, and loc vendors. I introduce, brief, and coordinate them as part of the engagement. No referral fees on either side.</p>
-        </div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-body">
+        </summary>
+        <p data-i18n="faq5.a">Yes. Nine years in the industry built a network of trusted studios, porting houses, QA partners, audio teams, and loc vendors. I introduce, brief, and coordinate them as part of the engagement. No referral fees on either side.</p>
+      </details>
+      <details class="faq-item" open>
+        <summary>
           <h3 data-i18n="faq6.q">We&rsquo;re pre-funding or pre-publisher. Will you still talk?</h3>
-          <p data-i18n="faq6.a">Yes. The discovery call doesn&rsquo;t care what stage you&rsquo;re in. If pitch deck shaping or publisher demo prep is what you need, that&rsquo;s its own service. If you genuinely can&rsquo;t afford anything yet, I&rsquo;ll point you at the right reading or the right people, no strings.</p>
-        </div>
-      </div>
+        </summary>
+        <p data-i18n="faq6.a">Yes. The discovery call doesn&rsquo;t care what stage you&rsquo;re in. If pitch deck shaping or publisher demo prep is what you need, that&rsquo;s its own service. If you genuinely can&rsquo;t afford anything yet, I&rsquo;ll point you at the right reading or the right people, no strings.</p>
+      </details>
     </div>
   </section>
 
@@ -2874,6 +2926,20 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
       io.observe(tabsRoot);
       document.addEventListener('visibilitychange', () => { if (document.hidden) stopPulse(); });
     }
+  })();
+
+  // FAQ accordion: collapsed on mobile, forced open on desktop
+  (function initFaqAccordion(){
+    const items = document.querySelectorAll('details.faq-item');
+    if (!items.length) return;
+    const mq = window.matchMedia('(max-width: 768px)');
+    function apply(){
+      const isMobile = mq.matches;
+      items.forEach(d => { d.open = !isMobile; });
+    }
+    apply();
+    if (mq.addEventListener) mq.addEventListener('change', apply);
+    else if (mq.addListener) mq.addListener(apply);
   })();
 
   // Cursor-following tooltips on marquee tiles (custom, no animation pause, no native dwell)
