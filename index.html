@@ -1643,6 +1643,45 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   .service-icon{ margin-top: 0; }
   .service ul{ columns: 1; }
 }
+@media (max-width: 768px){
+  .service{
+    grid-template-columns: 40px 1fr;
+    column-gap: 12px;
+    row-gap: 12px;
+  }
+  .service-icon--lead{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+  }
+  .service-icon--lead svg{
+    width: 20px;
+    height: 20px;
+  }
+  .service-head{
+    display: contents;
+  }
+  .service-header{
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .service-intro{
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0;
+    max-width: none;
+  }
+  .service-bullets{
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+  .service--icon-lead .service-head{
+    margin-top: 0;
+  }
+}
 @media (max-width: 760px){
   .nav{ display: none; }
   .menu-toggle{ display: inline-flex; }
