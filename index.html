@@ -1157,42 +1157,74 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   width: 10px; height: 1px; background: var(--clay);
 }
 
-@media (min-width: 769px) {
-  .service-bullets-wrapper summary {
-    display: none;
+/* Service cards: mobile collapsible bullets with round mustard toggle */
+@media (max-width: 768px) {
+  .service {
+    padding: 16px 0;
+    gap: 12px;
+  }
+  .service-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .service-title {
+    margin: 0;
+    flex: 1;
+    cursor: default;
+  }
+  .service-toggle {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background: var(--clay);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--clay) 25%, transparent);
+  }
+  .service-toggle:hover,
+  .service-toggle:focus-visible {
+    background: var(--clay-deep);
+    transform: scale(1.05);
+    outline: none;
+    box-shadow: 0 4px 12px color-mix(in srgb, var(--clay) 40%, transparent);
+  }
+  .service-toggle:active {
+    transform: scale(0.95);
+  }
+  .service-toggle .toggle-icon {
+    color: #000;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1;
+    display: block;
+  }
+  .service-intro {
+    margin-top: 8px;
+    margin-bottom: 0;
+  }
+  .service-bullets:not([hidden]) {
+    animation: bullet-fade-in 0.25s ease-out;
+  }
+  @keyframes bullet-fade-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 }
 
-@media (max-width: 768px) {
-  .service-bullets-wrapper {
-    margin-top: 12px;
+@media (min-width: 769px) {
+  .service-toggle {
+    display: none;
   }
-  .service-bullets-wrapper summary {
-    cursor: pointer;
-    list-style: none;
-    color: rgba(245, 197, 24, 0.9);
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 8px 0;
-    position: relative;
-    padding-right: 24px;
-    display: inline-block;
-  }
-  .service-bullets-wrapper summary::-webkit-details-marker { display: none; }
-  .service-bullets-wrapper summary::marker { display: none; }
-  .service-bullets-wrapper summary::after {
-    content: '↓';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: transform 0.2s ease;
-  }
-  .service-bullets-wrapper[open] summary::after {
-    transform: translateY(-50%) rotate(180deg);
-  }
-  .service-bullets-wrapper[open] summary {
-    margin-bottom: 8px;
+  .service-header {
+    display: block;
   }
 }
 
@@ -2043,19 +2075,21 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m8 16 3-7 5-3-3 7z"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svc3.h">Strategic Publishing Support</h3>
-          <p data-i18n="svc3.p">Nine years on the publisher side at Raw Fury and others. I share the network, the experience, and an honest view on how to reach the players, without becoming your publisher.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svc3.h">Strategic Publishing Support</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-1" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svc3.p">Nine years on the publisher side at Raw Fury and others. I share the network, the experience, and an honest view on how to reach the players, without becoming your publisher.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svc3.b1">Realistic roadmap &amp; publishing strategy</li>
-            <li data-i18n="svc3.b2">Network of co-dev studios, porting houses, vendors</li>
-            <li data-i18n="svc3.b3">Pitch deck shaping and review for funding &amp; deals</li>
-            <li data-i18n="svc3.b4">Publisher demo prep and feedback</li>
-            <li data-i18n="svc3.b5">Deal milestone &amp; schedule sanity check</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-1" hidden>
+          <li data-i18n="svc3.b1">Realistic roadmap &amp; publishing strategy</li>
+          <li data-i18n="svc3.b2">Network of co-dev studios, porting houses, vendors</li>
+          <li data-i18n="svc3.b3">Pitch deck shaping and review for funding &amp; deals</li>
+          <li data-i18n="svc3.b4">Publisher demo prep and feedback</li>
+          <li data-i18n="svc3.b5">Deal milestone &amp; schedule sanity check</li>
+        </ul>
       </article>
 
       <article class="service service--icon-lead" data-reveal>
@@ -2063,20 +2097,22 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><path d="M3 6h12"/><path d="M3 12h18"/><path d="M3 18h9"/><circle cx="18" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svc1.h">Production &amp; Project Operations</h3>
-          <p data-i18n="svc1.p">The right things at the right time. Schedules, documentation, and budgets, from pre-production all the way to gold master.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svc1.h">Production &amp; Project Operations</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-2" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svc1.p">The right things at the right time. Schedules, documentation, and budgets, from pre-production all the way to gold master.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svc1.b1">End-to-end project management</li>
-            <li data-i18n="svc1.b2">GDD review &amp; docs management</li>
-            <li data-i18n="svc1.b3">Workflow audits &amp; pipeline optimisation</li>
-            <li data-i18n="svc1.b4">Scope &amp; risk assessment</li>
-            <li data-i18n="svc1.b5">Project financial planning</li>
-            <li data-i18n="svc1.b6">Ad hoc consultations &amp; peer review</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-2" hidden>
+          <li data-i18n="svc1.b1">End-to-end project management</li>
+          <li data-i18n="svc1.b2">GDD review &amp; docs management</li>
+          <li data-i18n="svc1.b3">Workflow audits &amp; pipeline optimisation</li>
+          <li data-i18n="svc1.b4">Scope &amp; risk assessment</li>
+          <li data-i18n="svc1.b5">Project financial planning</li>
+          <li data-i18n="svc1.b6">Ad hoc consultations &amp; peer review</li>
+        </ul>
       </article>
 
       <article class="service service--icon-lead" data-reveal>
@@ -2084,20 +2120,22 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><rect x="3" y="8" width="14" height="10" rx="1.5"/><path d="M17 11h3l1 3v4h-4"/><circle cx="7" cy="19" r="1.6"/><circle cx="18" cy="19" r="1.6"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svc2.h">Platform &amp; Release Management</h3>
-          <p data-i18n="svc2.p">Clean releases, every platform, every market. Certifications, stores, launch logistics, external QA, and localisation.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svc2.h">Platform &amp; Release Management</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-3" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svc2.p">Clean releases, every platform, every market. Certifications, stores, launch logistics, external QA, and localisation.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svc2.b1">Console certification (PS, Xbox, Switch)</li>
-            <li data-i18n="svc2.b2">Digital store setup &amp; submissions</li>
-            <li data-i18n="svc2.b3">Launch logistics: patches, brands, storefronts</li>
-            <li data-i18n="svc2.b4">External QA, localisation coordination &amp; TRC/TCR compliance</li>
-            <li data-i18n="svc2.b5">PC, Nintendo, PlayStation, Xbox developer platforms</li>
-            <li data-i18n="svc2.b6">Globally consistent release execution</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-3" hidden>
+          <li data-i18n="svc2.b1">Console certification (PS, Xbox, Switch)</li>
+          <li data-i18n="svc2.b2">Digital store setup &amp; submissions</li>
+          <li data-i18n="svc2.b3">Launch logistics: patches, brands, storefronts</li>
+          <li data-i18n="svc2.b4">External QA, localisation coordination &amp; TRC/TCR compliance</li>
+          <li data-i18n="svc2.b5">PC, Nintendo, PlayStation, Xbox developer platforms</li>
+          <li data-i18n="svc2.b6">Globally consistent release execution</li>
+        </ul>
       </article>
 
       <article class="service service--icon-lead" data-reveal>
@@ -2105,19 +2143,21 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5"/><path d="M12 13v8"/><path d="m7.5 5.5 9 5"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svc4.h">Physical &amp; Boxed Editions</h3>
-          <p data-i18n="svc4.p">Disc, cart, box, art book. I&rsquo;ve taken indie titles through full physical releases, including Switch boxed and PS/Xbox disc editions. I run the conversations with distributors, replication houses, and rating boards so you don&rsquo;t have to learn that pipeline from scratch.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svc4.h">Physical &amp; Boxed Editions</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-4" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svc4.p">Disc, cart, box, art book. I&rsquo;ve taken indie titles through full physical releases, including Switch boxed and PS/Xbox disc editions. I run the conversations with distributors, replication houses, and rating boards so you don&rsquo;t have to learn that pipeline from scratch.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svc4.b1">Distributor relationships (US, EU, JP regions)</li>
-            <li data-i18n="svc4.b2">Replication &amp; manufacturing coordination</li>
-            <li data-i18n="svc4.b3">Physical SKU planning</li>
-            <li data-i18n="svc4.b4">ESRB / PEGI / USK / CERO age rating submissions</li>
-            <li data-i18n="svc4.b5">Production timeline &amp; disc/cart deadlines</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-4" hidden>
+          <li data-i18n="svc4.b1">Distributor relationships (US, EU, JP regions)</li>
+          <li data-i18n="svc4.b2">Replication &amp; manufacturing coordination</li>
+          <li data-i18n="svc4.b3">Physical SKU planning</li>
+          <li data-i18n="svc4.b4">ESRB / PEGI / USK / CERO age rating submissions</li>
+          <li data-i18n="svc4.b5">Production timeline &amp; disc/cart deadlines</li>
+        </ul>
       </article>
     </div>
 
@@ -2127,19 +2167,21 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/><circle cx="8" cy="5" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="11" cy="19" r="1.6"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svcP2.h">External Production Oversight</h3>
-          <p data-i18n="svcP2.p">A producer on your side of the table. Milestones, scope, and risk tracked across signed studios so surprises surface early, not at Portfolio Review meetings.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svcP2.h">External Production Oversight</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-5" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svcP2.p">A producer on your side of the table. Milestones, scope, and risk tracked across signed studios so surprises surface early, not at Portfolio Review meetings.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svcP2.b1">Publisher-side line producing</li>
-            <li data-i18n="svcP2.b2">Milestone &amp; deliverable tracking</li>
-            <li data-i18n="svcP2.b3">Scope &amp; schedule risk monitoring</li>
-            <li data-i18n="svcP2.b4">Vendor coordination: port, QA, audio, loc</li>
-            <li data-i18n="svcP2.b5">Cert &amp; launch oversight across platforms</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-5" hidden>
+          <li data-i18n="svcP2.b1">Publisher-side line producing</li>
+          <li data-i18n="svcP2.b2">Milestone &amp; deliverable tracking</li>
+          <li data-i18n="svcP2.b3">Scope &amp; schedule risk monitoring</li>
+          <li data-i18n="svcP2.b4">Vendor coordination: port, QA, audio, loc</li>
+          <li data-i18n="svcP2.b5">Cert &amp; launch oversight across platforms</li>
+        </ul>
       </article>
 
       <article class="service service--icon-lead" data-reveal>
@@ -2147,20 +2189,22 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><path d="M4 20h4L18.5 9.5a2.83 2.83 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/><path d="m5 19 3-1"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svcP4.h">Design Consultancy</h3>
-          <p data-i18n="svcP4.p">A design read on signed and prospective titles, run with the design partners I work with. Where the design holds, where it leaks players, and what to prototype before greenlighting more scope.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svcP4.h">Design Consultancy</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-6" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svcP4.p">A design read on signed and prospective titles, run with the design partners I work with. Where the design holds, where it leaks players, and what to prototype before greenlighting more scope.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svcP4.b1">Onboarding &amp; first-session effectiveness</li>
-            <li data-i18n="svcP4.b2">Design risk identification &amp; mitigation</li>
-            <li data-i18n="svcP4.b3">Design prototyping &amp; implementation review</li>
-            <li data-i18n="svcP4.b4">Core loop &amp; retention diagnostics</li>
-            <li data-i18n="svcP4.b5">Playtest design, observation &amp; analysis</li>
-            <li data-i18n="svcP4.b6">Tutorial, UX flow &amp; difficulty pacing</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-6" hidden>
+          <li data-i18n="svcP4.b1">Onboarding &amp; first-session effectiveness</li>
+          <li data-i18n="svcP4.b2">Design risk identification &amp; mitigation</li>
+          <li data-i18n="svcP4.b3">Design prototyping &amp; implementation review</li>
+          <li data-i18n="svcP4.b4">Core loop &amp; retention diagnostics</li>
+          <li data-i18n="svcP4.b5">Playtest design, observation &amp; analysis</li>
+          <li data-i18n="svcP4.b6">Tutorial, UX flow &amp; difficulty pacing</li>
+        </ul>
       </article>
 
       <article class="service service--icon-lead" data-reveal>
@@ -2168,20 +2212,22 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6 .9-4.4 4.3 1 6-5.3-2.8-5.3 2.8 1-6L3.3 9.4l6-.9z"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svcP6.h">Mock Reviews for In-Development Games</h3>
-          <p data-i18n="svcP6.p">A press-style critique of titles still in development. We play the build, write the review you&rsquo;d wish you had at launch, and flag what reviewers will likely praise or pick apart.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svcP6.h">Mock Reviews for In-Development Games</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-7" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svcP6.p">A press-style critique of titles still in development. We play the build, write the review you&rsquo;d wish you had at launch, and flag what reviewers will likely praise or pick apart.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svcP6.b1">Press-style written review on current build</li>
-            <li data-i18n="svcP6.b2">Score range estimate with reasoning</li>
-            <li data-i18n="svcP6.b3">Strengths reviewers will highlight</li>
-            <li data-i18n="svcP6.b4">Weaknesses likely to land in critique</li>
-            <li data-i18n="svcP6.b5">Comparable titles &amp; positioning notes</li>
-            <li data-i18n="svcP6.b6">Recommendations to lift the perceived score</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-7" hidden>
+          <li data-i18n="svcP6.b1">Press-style written review on current build</li>
+          <li data-i18n="svcP6.b2">Score range estimate with reasoning</li>
+          <li data-i18n="svcP6.b3">Strengths reviewers will highlight</li>
+          <li data-i18n="svcP6.b4">Weaknesses likely to land in critique</li>
+          <li data-i18n="svcP6.b5">Comparable titles &amp; positioning notes</li>
+          <li data-i18n="svcP6.b6">Recommendations to lift the perceived score</li>
+        </ul>
       </article>
 
       <article class="service service--icon-lead" data-reveal>
@@ -2189,20 +2235,22 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
           <svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
         <div class="service-head">
-          <h3 data-i18n="svcP5.h">Scouting &amp; Dev Relationships Help</h3>
-          <p data-i18n="svcP5.p">Freelance scouting on the ground when your team can&rsquo;t be present. Direct dev conversations, plus feedback on trends and projects worth watching.</p>
+          <div class="service-header">
+            <h3 class="service-title" data-i18n="svcP5.h">Scouting &amp; Dev Relationships Help</h3>
+            <button class="service-toggle" type="button" aria-expanded="false" aria-controls="service-bullets-8" aria-label="Show details">
+              <span class="toggle-icon">+</span>
+            </button>
+          </div>
+          <p class="service-intro" data-i18n="svcP5.p">Freelance scouting on the ground when your team can&rsquo;t be present. Direct dev conversations, plus feedback on trends and projects worth watching.</p>
         </div>
-        <details class="service-bullets-wrapper">
-          <summary class="service-bullets-toggle" data-i18n="service.show_details">Show details</summary>
-          <ul>
-            <li data-i18n="svcP5.b1">Event coverage when your scouts are double-booked</li>
-            <li data-i18n="svcP5.b2">Booth walks, dev meetings &amp; pitch sessions on your behalf</li>
-            <li data-i18n="svcP5.b3">Trend reports across genres &amp; regions</li>
-            <li data-i18n="svcP5.b4">Studio feedback drawn from direct dev conversations</li>
-            <li data-i18n="svcP5.b5">Heads-up on interesting projects before they make rounds</li>
-            <li data-i18n="svcP5.b6">Festival &amp; showcase coverage (Gamescom, IAB, GDC)</li>
-          </ul>
-        </details>
+        <ul class="service-bullets" id="service-bullets-8" hidden>
+          <li data-i18n="svcP5.b1">Event coverage when your scouts are double-booked</li>
+          <li data-i18n="svcP5.b2">Booth walks, dev meetings &amp; pitch sessions on your behalf</li>
+          <li data-i18n="svcP5.b3">Trend reports across genres &amp; regions</li>
+          <li data-i18n="svcP5.b4">Studio feedback drawn from direct dev conversations</li>
+          <li data-i18n="svcP5.b5">Heads-up on interesting projects before they make rounds</li>
+          <li data-i18n="svcP5.b6">Festival &amp; showcase coverage (Gamescom, IAB, GDC)</li>
+        </ul>
       </article>
     </div>
   </section>
@@ -2453,8 +2501,6 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     'services.kicker': '<span class="num">02</span> Servizi',
     'services.h': '<em>Veterani</em> della produzione<br />e del design.',
     'services.intro': 'Lavoro con un piccolo gruppo di producer e designer di fiducia, tutti con titoli pubblicati su console, PC e mobile dentro studi di sviluppo e publisher. Ci inseriamo progetto per progetto, a retainer o con un audit mirato. Due toolkit distinti, a seconda di che lato del tavolo sei.',
-
-    'service.show_details': 'Mostra dettagli',
 
     'svc1.h': 'Produzione & Project Operations',
     'svc1.p': 'Le cose giuste al momento giusto. Schedule, documentazione e budget, dalla pre-produzione fino al gold master.',
@@ -3007,18 +3053,51 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     else if (mq.addListener) mq.addListener(apply);
   })();
 
-  // Service bullets: collapsed on mobile, forced open on desktop
+  // Service bullets: collapsed on mobile with toggle button, always visible on desktop
   (function() {
-    const mq = window.matchMedia('(min-width: 769px)');
-    function applyDesktopState() {
-      if (mq.matches) {
-        document.querySelectorAll('.service-bullets-wrapper').forEach(el => el.open = true);
-      } else {
-        document.querySelectorAll('.service-bullets-wrapper').forEach(el => el.open = false);
-      }
+    const toggles = document.querySelectorAll('.service-toggle');
+    const mq = window.matchMedia('(max-width: 768px)');
+
+    toggles.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        const targetId = this.getAttribute('aria-controls');
+        const target = document.getElementById(targetId);
+        const icon = this.querySelector('.toggle-icon');
+
+        if (expanded) {
+          this.setAttribute('aria-expanded', 'false');
+          this.setAttribute('aria-label', 'Show details');
+          target.hidden = true;
+          if (icon) icon.textContent = '+';
+        } else {
+          this.setAttribute('aria-expanded', 'true');
+          this.setAttribute('aria-label', 'Hide details');
+          target.hidden = false;
+          if (icon) icon.textContent = '−';
+        }
+      });
+    });
+
+    function applyResponsiveState() {
+      document.querySelectorAll('.service-bullets').forEach(ul => {
+        if (mq.matches) {
+          ul.hidden = true;
+          const btn = document.querySelector(`[aria-controls="${ul.id}"]`);
+          if (btn) {
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Show details');
+            const icon = btn.querySelector('.toggle-icon');
+            if (icon) icon.textContent = '+';
+          }
+        } else {
+          ul.hidden = false;
+        }
+      });
     }
-    document.addEventListener('DOMContentLoaded', applyDesktopState);
-    mq.addEventListener('change', applyDesktopState);
+
+    document.addEventListener('DOMContentLoaded', applyResponsiveState);
+    mq.addEventListener('change', applyResponsiveState);
   })();
 
   // Cursor-following tooltips on marquee tiles (custom, no animation pause, no native dwell)
