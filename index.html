@@ -1153,9 +1153,13 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   color: var(--ink);
   border-top: 1px solid var(--rule-soft);
 }
-.service ul li:first-child,
-.service ul li:nth-child(4){
+.service ul li:first-child {
   border-top: 0;
+}
+@media (min-width: 769px) {
+  .service ul li:nth-child(4){
+    border-top: 0;
+  }
 }
 .service ul li::before{
   content: "";
