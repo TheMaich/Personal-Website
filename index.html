@@ -1991,7 +1991,7 @@ body.is-tab-hidden .dot{
               </div>
               <div class="meta-row">
                 <dt data-i18n="meta.rate.dt">Rate</dt>
-                <dd data-i18n="meta.rate.dd">From €350/day</dd>
+                <dd data-i18n="meta.rate.dd">€350/day · €3,500/mo retainer (see FAQ)</dd>
               </div>
             </dl>
           </aside>
@@ -2398,13 +2398,13 @@ body.is-tab-hidden .dot{
     <div class="faq-list" data-reveal>
       <div class="faq-item">
         <div class="faq-header">
-          <h3 class="faq-question" data-i18n="faq1.q">How do you charge? Project, retainer, or audit?</h3>
+          <h3 class="faq-question" data-i18n="faq1.q">What's your rate?</h3>
           <button class="faq-toggle" type="button" aria-expanded="false" aria-controls="faq-answer-1" aria-label="Show answer">
             <span class="toggle-icon">+</span>
           </button>
         </div>
         <div class="faq-answer" id="faq-answer-1" hidden>
-          <p data-i18n="faq1.a">Three formats. Projects for defined deliverables: a cert pass, a workflow audit, a publisher demo prep. Retainers for ongoing producer support, billed monthly. Audits for short, focused diagnostics, usually one to two weeks. We agree the format on the discovery call, once I understand what you actually need.</p>
+          <p data-i18n="faq1.a">It depends on the format. For audits and project-based work, the rate is €350/day. For retainers (minimum 3 months), the rate is €3,500/month, a better deal for both sides when the engagement is ongoing. All rates are exclusive of VAT.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -2662,7 +2662,7 @@ body.is-tab-hidden .dot{
     'meta.engage.dt': 'Formati',
     'meta.engage.dd': 'Progetto · Retainer · Audit',
     'meta.rate.dt': 'Tariffa',
-    'meta.rate.dd': 'Da €350/giorno',
+    'meta.rate.dd': '€350/giorno · €3.500/mese retainer (vedi FAQ)',
 
     'marquee.h': 'Studi, organizzazioni e giochi con cui ho lavorato',
     'marquee.range': 'Dal 2015',
@@ -2763,8 +2763,8 @@ body.is-tab-hidden .dot{
     'faq.h': 'Domande, <em>prima</em> ancora di vederci.',
     'faq.intro': 'Le cose che mi chiedono al primo contatto, con risposte già pronte. Se la tua non è qui, scrivila pure: meglio per entrambi sapere su cosa ci stiamo accordando.',
 
-    'faq1.q': 'Come fatturi? Progetto, retainer o audit?',
-    'faq1.a': 'Tre formati. Progetti per deliverable definiti: una cert pass, un workflow audit, una publisher demo prep. Retainer per supporto producer continuativo, fatturato mensilmente. Audit per diagnostiche brevi e mirate, di solito una o due settimane. Concordiamo il formato durante la call conoscitiva, una volta capito cosa ti serve davvero.',
+    'faq1.q': 'Qual è il tuo rate?',
+    'faq1.a': "Dipende dal formato. Per audit e lavori a progetto, il rate è €350/giorno. Per retainer (minimo 3 mesi), il rate è €3.500/mese, più conveniente per entrambi quando l'ingaggio è continuativo. Tutte le tariffe sono da intendersi al netto di IVA.",
     'faq2.q': 'Firmi NDA prima della call conoscitiva?',
     'faq2.a': 'Volentieri firmo il vostro NDA standard prima della call se il progetto lo richiede. Per la maggior parte delle conversazioni iniziali, un &ldquo;questo resta tra noi&rdquo; verbale basta. Sono nel settore da abbastanza tempo da sapere quando tenere la bocca chiusa.',
     'faq3.q': 'Chi tiene IP, documentazione e processi quando te ne vai?',
@@ -3174,7 +3174,7 @@ body.is-tab-hidden .dot{
       'Name: ' + (data.get('name') || '') + '\n' +
       'Company: ' + (data.get('company') || '') + '\n' +
       'Email: ' + (data.get('email') || '') + '\n' +
-      'Phone: ' + (data.get('phone') || '') + '\n\n' +
+      'Budget: ' + (data.get('budget') || '') + '\n\n' +
       (data.get('message') || '');
     const subject = tr('form.subject') + (data.get('name') || '');
     const href = 'mailto:michele@spritzconsulting.com' +
