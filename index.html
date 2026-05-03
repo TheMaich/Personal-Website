@@ -12,7 +12,8 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#F4C430">
+<meta name="theme-color" content="#E5B415" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#8A6600" media="(prefers-color-scheme: light)">
 <meta name="description" content="Independent games industry consultancy: production, publishing, game design. For indie studios and publishers that need a sharper operator, not a bigger team." />
 <meta name="author" content="Michele Di Nardo" />
 <meta name="robots" content="index, follow" />
@@ -71,6 +72,9 @@
   --clay-deep:#C4970A;   /* hover */
   --clay-soft:#2A1F05;   /* accent wash */
   --accent-2:#FF2EC8;    /* magenta highlight, used sparingly */
+  --danger:#FF2EC8;      /* form error / alerts; promoted from --accent-2 to keep clay brand-only */
+  --success:#62C28A;     /* form success / confirmations */
+  --portrait-bg:#E5B415; /* theme-invariant: matches portrait's mustard backdrop */
   --err-bg:#2A1020;
   --grain-blend: screen;
   --grain-opacity: 0.05;
@@ -84,13 +88,16 @@ html[data-theme="light"]{
   --paper-3:#FBFAF4;
   --ink:#0A0B0E;
   --ink-2:#4A4E58;
-  --ink-3:#797C85;
+  --ink-3:#5F6168;
   --rule:#CFCDC2;
   --rule-soft:#DCDAD0;
   --clay:#8A6600;        /* deep mustard, legible on cream */
   --clay-deep:#6B5000;
   --clay-soft:#F3E4A8;
   --accent-2:#BE1383;
+  --danger:#BE1383;
+  --success:#1F6B3D;
+  --portrait-bg:#E5B415; /* theme-invariant by design */
   --err-bg:#FFE7F3;
   --grain-blend: multiply;
   --grain-opacity: 0.05;
@@ -193,15 +200,11 @@ html{
   animation: aurora-2 44s ease-in-out infinite alternate;
   opacity: 0.45;
 }
-.bg-aurora .blob-3{
-  width: 64vmax; height: 38vmax;
-  left: calc(50% - 32vmax); top: calc(50% - 10vmax);
-  background: radial-gradient(ellipse 55% 55% at center, color-mix(in srgb, var(--accent-2) 40%, transparent), transparent 70%);
-  animation: aurora-3 54s ease-in-out infinite alternate;
-  opacity: 0.18;
-}
 html[data-theme="light"] .bg-aurora .blob{ opacity: 0.35; }
-html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
+
+/* Light-theme expression: promote magenta into kicker accents */
+html[data-theme="light"] .kicker .bar{ background: var(--accent-2); }
+html[data-theme="light"] .kicker .num{ color: var(--accent-2); }
 @keyframes aurora-1{
   0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
   100% { transform: translate(28vw, 18vh) rotate(32deg) scale(1.15); }
@@ -210,12 +213,19 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
   100% { transform: translate(-22vw, -14vh) rotate(-40deg) scale(1.2); }
 }
-@keyframes aurora-3{
-  0%   { transform: translate(0, 0) rotate(0deg) scale(1); }
-  100% { transform: translate(18vw, -20vh) rotate(55deg) scale(0.9); }
-}
 @media (prefers-reduced-motion: reduce){
   .bg-aurora .blob{ animation: none; }
+}
+
+/* Pause ambient animations when tab is hidden (perf) */
+body.is-tab-hidden .grain,
+body.is-tab-hidden .bg-aurora .blob,
+body.is-tab-hidden .marquee-track,
+body.is-tab-hidden .testimonials-track,
+body.is-tab-hidden .portrait,
+body.is-tab-hidden .speech-bubble,
+body.is-tab-hidden .dot{
+  animation-play-state: paused;
 }
 
 /* Container */
@@ -281,7 +291,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   .wordmark .dot{ animation: none; }
 }
 .wordmark .role{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 13.5px; font-weight: 400;
   color: var(--ink-2); letter-spacing: 0.04em; text-transform: uppercase;
   padding-left: 12px; margin-left: 2px;
@@ -291,7 +301,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   display: flex; align-items: center; gap: 4px;
 }
 .nav a{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14px; letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ink-2);
@@ -327,7 +337,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 
 .menu-toggle{
   display: none;
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   border: 1px solid var(--rule);
   border-radius: 8px;
   align-items: center; justify-content: center;
@@ -349,7 +359,8 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .theme-toggle button{
   display: inline-flex; align-items: center; gap: 6px;
   padding: 6px 12px;
-  font-family: var(--mono); font-style: italic;
+  min-height: 38px;
+  font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -381,7 +392,9 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 }
 .lang-toggle button{
   padding: 6px 12px;
-  font-family: var(--mono); font-style: italic;
+  min-height: 38px;
+  display: inline-flex; align-items: center;
+  font-family: var(--mono);
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -427,10 +440,10 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   letter-spacing: -0.02em; line-height: 1;
 }
 .mobile-menu nav a{ display: flex; align-items: baseline; gap: 16px; }
-.mobile-menu nav a .num{ font-family: var(--mono); font-style: italic; font-size: 13px; color: var(--clay); letter-spacing: 0.06em; }
+.mobile-menu nav a .num{ font-family: var(--mono); font-size: 13px; color: var(--clay); letter-spacing: 0.06em; }
 .mobile-menu .foot{
   margin-top: auto;
-  font-family: var(--mono); font-style: italic; font-size: 14px; color: var(--ink-2);
+  font-family: var(--mono); font-size: 14px; color: var(--ink-2);
   letter-spacing: 0.04em; text-transform: uppercase;
   display: flex; justify-content: center; padding: 32px 0 16px;
   border-top: 1px solid var(--rule);
@@ -442,13 +455,14 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   padding-bottom: clamp(96px, 14vw, 184px);
   position: relative;
 }
-#consultancy{ padding-top: clamp(12px, 1.6vw, 24px); padding-bottom: clamp(16px, 2vw, 28px); }
-#services{ padding-top: clamp(80px, 10vw, 120px); padding-bottom: clamp(16px, 2vw, 28px); }
+#consultancy{ padding-top: clamp(28px, 3.5vw, 56px); padding-bottom: clamp(32px, 4vw, 64px); }
+#consultancy .about-title{ font-size: clamp(28px, 3.4vw, 44px); }
+#services{ padding-top: clamp(40px, 5vw, 64px); padding-bottom: clamp(16px, 2vw, 28px); }
 #faq{ padding-top: clamp(16px, 2vw, 28px); padding-bottom: clamp(40px, 6vw, 72px); }
 #contact{ padding-top: clamp(28px, 4vw, 56px); padding-bottom: clamp(64px, 9vw, 120px); }
 .kicker{
   display: inline-flex; align-items: center; gap: 10px;
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--ink-2);
 }
@@ -577,7 +591,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 }
 .hero-nav-btn{
   appearance: none;
-  width: 42px; height: 42px;
+  width: 44px; height: 44px;
   border-radius: 999px;
   border: 1px solid var(--rule);
   background: var(--paper-3);
@@ -637,7 +651,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   margin: 0;
   aspect-ratio: 1 / 1;
   border-radius: 16px;
-  background: #E5B415; /* matches portrait's mustard backdrop */
+  background: var(--portrait-bg);
   box-shadow: 0 1px 0 rgba(0,0,0,0.4), 0 20px 50px -18px color-mix(in srgb, var(--clay) 40%, transparent);
   animation: portrait-float 8s ease-in-out infinite;
   will-change: transform;
@@ -666,7 +680,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   opacity: 0;
   transform: scale(0.18) rotate(-10deg);
   transform-origin: 20% 0%;
-  animation: bubble-pop .55s cubic-bezier(0.34, 1.56, 0.64, 1) .75s forwards;
+  animation: bubble-pop .55s cubic-bezier(0.22, 1, 0.36, 1) .75s forwards;
   filter: drop-shadow(4px 4px 0 var(--clay));
 }
 .bubble-body{
@@ -756,7 +770,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   font-size: 14px;
 }
 .meta-row dt{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--ink-3);
 }
@@ -779,7 +793,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .marquee::after{  right: 0; background: linear-gradient(to left,  var(--paper-2), transparent); }
 .marquee-kicker{
   display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--mono); font-style: italic; font-size: 13.5px; letter-spacing: 0.08em;
+  font-family: var(--mono); font-size: 13.5px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--ink-2);
   padding-bottom: 20px;
 }
@@ -796,7 +810,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   z-index: 200;
   background: var(--ink);
   color: var(--paper);
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 12.5px;
   letter-spacing: 0.04em;
   padding: 7px 11px;
@@ -825,9 +839,40 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   height: 104px;
   box-shadow: none;
 }
+.marquee-track--reverse .logo-tile{
+  cursor: help;
+  position: relative;
+  overflow: hidden;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.marquee-track--reverse .logo-tile::after{
+  content: "i";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--paper);
+  background: var(--clay);
+  border-radius: 999px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity .25s var(--ease), transform .35s var(--ease);
+  pointer-events: none;
+  z-index: 2;
+}
 .marquee-track--reverse .logo-tile:hover{
-  border-color: transparent;
-  transform: none;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -10px color-mix(in srgb, var(--clay) 45%, transparent);
+}
+.marquee-track--reverse .logo-tile:hover::after{
+  opacity: 1;
+  transform: translateY(0);
 }
 .marquee-track--reverse .logo-tile img{
   height: 104px;
@@ -950,7 +995,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 }
 .testimonial cite{
   font-style: normal;
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 12.5px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -982,6 +1027,22 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 }
 #consultancy .step-n{ font-size: 56px; }
 #consultancy .step h3{ font-size: 19px; }
+.about-prose{
+  margin: 28px 0 0;
+  display: grid;
+  gap: 14px;
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+.about-prose p{ margin: 0; }
+.about-prose strong{ color: var(--ink); font-weight: 600; }
+.about-prose em{ color: var(--clay); font-style: italic; }
+@media (max-width: 720px){
+  .about-prose{ gap: 12px; margin-top: 20px; }
+}
 .about-title{
   font-family: var(--serif);
   font-weight: 400;
@@ -1116,7 +1177,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .services-panel .service:first-of-type{ margin-top: 32px; }
 .service:last-child{ border-bottom: 1px solid var(--rule); }
 .service-num{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14px; letter-spacing: 0.1em;
   color: var(--clay);
 }
@@ -1192,8 +1253,8 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   }
   .service-toggle {
     flex-shrink: 0;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border: none;
     border-radius: 50%;
     background: var(--clay);
@@ -1216,7 +1277,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     transform: scale(0.95);
   }
   .service-toggle .toggle-icon {
-    color: #000;
+    color: var(--paper);
     font-size: 1.4rem;
     font-weight: 600;
     line-height: 1;
@@ -1280,7 +1341,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   will-change: transform;
 }
 .step-n[data-count].is-locked{
-  animation: slot-land 420ms cubic-bezier(.2,.8,.2,1.2) 1;
+  animation: slot-land 420ms cubic-bezier(0.22, 1, 0.36, 1) 1;
 }
 @keyframes slot-land{
   0%  { transform: translateY(-14px) scaleY(1.12); }
@@ -1306,7 +1367,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   margin: 0;
 }
 .step-tag{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
   color: var(--ink-3);
   align-self: end;
@@ -1401,8 +1462,8 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .faq-item:hover .faq-question{ color: var(--clay); }
 .faq-toggle{
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
   background: var(--clay);
@@ -1423,7 +1484,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 }
 .faq-toggle:active{ transform: scale(0.95); }
 .faq-toggle .toggle-icon{
-  color: #000;
+  color: var(--paper);
   font-size: 1.4rem;
   font-weight: 600;
   line-height: 1;
@@ -1523,7 +1584,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .field{ display: grid; gap: 6px; }
 .field.wide{ grid-column: 1 / -1; }
 .field label{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 13.5px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1531,7 +1592,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 }
 .field label .req{ color: var(--clay); margin-left: 2px; }
 .field input, .field textarea{
-  font: 400 15.5px/1.4 var(--sans);
+  font: 400 16px/1.4 var(--sans);
   color: var(--ink);
   background: var(--paper);
   border: 1px solid var(--rule);
@@ -1550,14 +1611,15 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .field textarea{ resize: vertical; min-height: 130px; }
 .field[data-error="true"] input,
 .field[data-error="true"] textarea{
-  border-color: var(--clay);
+  border-color: var(--danger);
   background: var(--err-bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 22%, transparent);
 }
 .field .err{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14px; letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--clay);
+  color: var(--danger);
   min-height: 14px;
 }
 .form-foot{
@@ -1567,15 +1629,15 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   flex-wrap: wrap;
 }
 .form-foot small{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14.5px; color: var(--ink-3);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .form-success{
   display: none;
-  font-family: var(--mono); font-style: italic;
-  font-size: 14.5px; color: #3E8B59;
+  font-family: var(--mono);
+  font-size: 14.5px; color: var(--success);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -1609,7 +1671,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .footer-meta{ margin-top: 72px; border-top: 1px solid var(--rule); padding-top: 28px; display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
 .footer-meta .links{ display: flex; gap: 20px; flex-wrap: wrap; }
 .footer-meta a{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--ink-2);
   display: inline-flex; align-items: center; gap: 8px;
@@ -1619,7 +1681,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 .footer-meta a .arrow{ transition: transform .3s var(--ease); }
 .footer-meta a:hover .arrow{ transform: translate(2px, -2px); }
 .footer-meta .copy{
-  font-family: var(--mono); font-style: italic;
+  font-family: var(--mono);
   font-size: 14.5px; color: var(--ink-3);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -1822,7 +1884,6 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 <div class="bg-aurora" aria-hidden="true">
   <div class="blob blob-1"></div>
   <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
 </div>
 <div class="grain" aria-hidden="true"></div>
 
@@ -2070,6 +2131,10 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
         <h2 class="about-title" id="about-h" data-reveal data-i18n="about.h">
           Nine years inside game development, at every angle.
         </h2>
+        <div class="about-prose" data-reveal>
+          <p data-i18n="about.p1" data-i18n-html>QA at <strong>34BigThings</strong> and <strong>Rebellion</strong>. Production back at 34BigThings. Publishing at <strong>Raw Fury</strong>. Most recently Producer at <strong>Untold Games</strong> on <em>City&nbsp;20</em>. Co-founder of Scuola Nash, juror at Indie Arena Booth.</p>
+          <p data-i18n="about.p2" data-i18n-html>From AAA to single-developer studios. From QA to publishing. Every side of the table.</p>
+        </div>
         <div class="process-rail" data-reveal>
           <div class="step">
             <div class="step-n" data-count="15+">15+</div>
@@ -2413,7 +2478,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
         </p>
       </div>
 
-      <form class="form" id="contact-form" data-reveal novalidate aria-describedby="form-status">
+      <form class="form" id="contact-form" data-reveal aria-describedby="form-status">
         <div class="form-grid">
           <div class="field">
             <label for="f-name" data-i18n="form.name.label" data-i18n-html>Your name <span class="req" aria-hidden="true">*</span></label>
@@ -2443,7 +2508,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
         </div>
         <div class="form-foot">
           <small id="form-status" data-i18n="form.status">Opens your mail client &middot; no data stored.</small>
-          <span class="form-success" id="form-success" data-i18n="form.success">Message drafted. Check your mail client.</span>
+          <span class="form-success" id="form-success" role="status" aria-live="polite" data-i18n="form.success">Message drafted. Check your mail client.</span>
           <button type="submit" class="btn btn-primary">
             <span data-i18n="form.submit">Submit</span>
             <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></svg>
@@ -2567,9 +2632,8 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
 
     'about.kicker': '<span class="num">01</span> La Mia Esperienza',
     'about.h': 'Nove anni dentro lo sviluppo videoludico, da tutti i lati.',
-    'about.p1': 'Nove anni lungo tutta la filiera della produzione. Ho iniziato nel QA, prima come Tester e poi come Manager in <strong>34BigThings</strong> su <em>Redout</em>, poi come QA Project Lead in <strong>Rebellion</strong> su <em>Sniper Elite 4</em>, <em>Strange Brigade</em> e <em>Zombie Army 4</em>. Sono passato al publishing come Line e Publishing Producer in <strong>Raw Fury</strong> su <em>Kathy Rain 2</em>, <em>Moonstone Island</em> e <em>Dome Keeper</em>, e più di recente sono tornato in-house come Producer in <strong>Untold Games</strong> su <em>City&nbsp;20</em>.',
-    'about.p2': 'Oggi sono co-fondatore di <strong>Scuola Nash</strong>, una scuola di sviluppo videoludico a Torino, siedo nella giuria dell&rsquo;<strong>Indie Arena Booth</strong> alla Gamescom e porto avanti <strong>Spritz Consulting</strong>, che offre supporto in produzione e publishing agli studi che hanno bisogno di una mano esperta per un periodo, non di un&rsquo;assunzione full-time.',
-    'about.p3': 'Dopo tutto questo, un pattern si ripete: quello che rompe i progetti raramente è il codice o la visione creativa. È la struttura intorno. Comunicazione che si perde per strada, scope che raddoppia in silenzio, certificazioni gestite troppo tardi, pitch che non arrivano. È lì che entra <strong>Spritz Consulting</strong>. Sbroglia il lavoro intorno al lavoro, così il tuo team può concentrarsi sul gioco e farlo uscire davvero.',
+    'about.p1': 'QA in <strong>34BigThings</strong> e <strong>Rebellion</strong>. Production di nuovo in 34BigThings. Publishing in <strong>Raw Fury</strong>. Più di recente Producer in <strong>Untold Games</strong> su <em>City&nbsp;20</em>. Co-fondatore di Scuola Nash, giurato all&rsquo;Indie Arena Booth.',
+    'about.p2': 'Da AAA a studi di un solo sviluppatore. Dal QA al publishing. Ogni lato del tavolo.',
 
     'stats.shipped.h': 'Giochi pubblicati',
     'stats.shipped.p': 'Titoli usciti tra ruoli in QA, publishing e produzione, su PC e console.',
@@ -2693,6 +2757,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     'form.status': 'Apre il tuo client email · nessun dato archiviato.',
     'form.success': 'Messaggio pronto. Controlla il tuo client email.',
     'form.submit': 'Invia',
+    'form.submitting': 'Apertura mail…',
     'form.err.name': 'Aggiungi il tuo nome.',
     'form.err.email.required': 'L’email è obbligatoria.',
     'form.err.email.invalid': 'Email non valida.',
@@ -2712,6 +2777,7 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
     'form.err.email.invalid': 'That email looks off.',
     'form.err.msg': 'A short message, please.',
     'form.subject': 'Project enquiry: ',
+    'form.submitting': 'Opening mail…',
   };
 
   let currentLang = 'en';
@@ -3001,6 +3067,11 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   // Form validation + mailto submit
   const form = document.getElementById('contact-form');
   const success = document.getElementById('form-success');
+  // Progressive enhancement: JS handles validation; native takes over if script never reaches here.
+  if (form) form.noValidate = true;
+  const submitBtn = form ? form.querySelector('button[type="submit"]') : null;
+  const submitBtnLabel = submitBtn ? submitBtn.querySelector('[data-i18n="form.submit"]') : null;
+  const submitBtnText = submitBtnLabel ? submitBtnLabel.textContent : '';
   const setFieldError = (input, message) => {
     const field = input.closest('.field');
     const err = field.querySelector('.err');
@@ -3045,7 +3116,17 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     submitAttempted = true;
-    if (!validate(true)) return;
+    if (!validate(true)) {
+      const firstError = form.querySelector('[data-error="true"] input, [data-error="true"] textarea');
+      if (firstError) firstError.focus();
+      return;
+    }
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.setAttribute('aria-busy', 'true');
+      if (submitBtnLabel) submitBtnLabel.textContent = tr('form.submitting') || 'Opening mail…';
+    }
+    form.setAttribute('aria-busy', 'true');
     const data = new FormData(form);
     const body =
       'Name: ' + (data.get('name') || '') + '\n' +
@@ -3059,6 +3140,14 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
       '&body=' + encodeURIComponent(body);
     window.location.href = href;
     success.dataset.visible = 'true';
+    setTimeout(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.removeAttribute('aria-busy');
+        if (submitBtnLabel) submitBtnLabel.textContent = submitBtnText;
+      }
+      form.removeAttribute('aria-busy');
+    }, 1200);
   });
   form.addEventListener('blur', (e) => {
     if (!submitAttempted) return;
@@ -3244,6 +3333,13 @@ html[data-theme="light"] .bg-aurora .blob-3{ opacity: 0.12; }
   let savedLang = 'en';
   try { savedLang = localStorage.getItem(LANG_KEY) || 'en'; } catch (e) {}
   applyLang(savedLang);
+})();
+
+/* Pause ambient animations when tab loses focus (perf budget) */
+(function initVisibilityGate(){
+  const sync = () => document.body.classList.toggle('is-tab-hidden', document.hidden);
+  document.addEventListener('visibilitychange', sync);
+  sync();
 })();
 </script>
 
