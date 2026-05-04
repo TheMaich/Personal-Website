@@ -2573,6 +2573,7 @@ body.is-tab-hidden .dot{
       <div class="lang-toggle" role="group" data-i18n-aria="lang.aria.group" aria-label="Language">
         <button type="button" data-lang-target="en" aria-pressed="true" aria-label="English">EN</button>
         <button type="button" data-lang-target="it" aria-pressed="false" aria-label="Italiano">IT</button>
+        <button type="button" data-lang-target="fr" aria-pressed="false" aria-label="Passer en français">FR</button>
       </div>
     </div>
     <span class="copy" data-i18n="footer.copy">&copy; 2026 Spritz Consulting &middot; All rights reserved</span>
@@ -2795,6 +2796,166 @@ body.is-tab-hidden .dot{
     'footer.linkedin.aria': 'Profilo LinkedIn',
     'footer.copy': '© 2026 Spritz Consulting · Tutti i diritti riservati',
   };
+  const FR = {
+    'nav.consultancy': 'Mon Parcours',
+    'nav.services': 'Services',
+    'nav.faq': 'FAQ',
+    'nav.contact': 'Contact',
+    'menu.open': 'Ouvrir le menu',
+    'menu.close': 'Fermer le menu',
+    'theme.day': 'Clair',
+    'theme.night': 'Sombre',
+    'theme.aria.day': 'Passer au thème clair',
+    'theme.aria.night': 'Passer au thème sombre',
+    'theme.aria.group': 'Thème',
+    'lang.aria.group': 'Langue',
+    'hero.kicker': 'Conseil en Production & Publishing',
+    'hero.h1': 'Un <em>Shot</em> de Production<br />& Publishing pour la games industry.',
+    'hero.intro': 'J\'interviens sur toute la chaîne de production : du QA à l\'indie publishing, de la certification à la livraison en store. J\'aide les studios et les publishers à aller plus vite, à sortir des jeux propres, et à gérer tout ce qui existe entre un pitch prometteur et un jeu terminé.',
+    'cta.book': 'Réserver un appel de découverte',
+    'cta.services': 'Voir les services',
+    'portrait.alt': 'Michele Di Nardo, casquette et t-shirt noirs, sur fond jaune moutarde.',
+    'bubble.aria': 'Un salut de Michele',
+    'bubble.title': '<span class="hola">Ciao ! </span>Je suis Michele',
+    'bubble.sub': '(ou Miki, pour faire court)',
+    'meta.now.dt': 'Maintenant',
+    'meta.now.dd': 'Producer indépendant · Spritz Consulting',
+    'meta.also.dt': 'Aussi',
+    'meta.also.dd': '9 ans entre Raw Fury, Rebellion & 34BigThings',
+    'meta.recent.dt': 'Récent',
+    'meta.recent.dd': 'Producer sur <em>City 20</em> (Untold Games)',
+    'meta.based.dt': 'Base',
+    'meta.based.dd': 'Europe · CET',
+    'meta.engage.dt': 'Formats',
+    'meta.engage.dd': 'Projet · Retainer · Audit',
+    'meta.rate.dt': 'Tarif',
+    'meta.rate.dd': '€250/jour · €3 200/mois retainer (voir FAQ)',
+    'marquee.h': 'Studios, organisations et jeux avec lesquels j\'ai travaillé',
+    'about.kicker': '<span class="num">01</span> Mon Parcours',
+    'about.h': 'Côté studio, côté publisher, et tout ce qu\'il y a entre les deux.',
+    'about.p1': 'QA chez <strong>34BigThings</strong> et <strong>Rebellion</strong>. Production de retour chez <strong>34BigThings</strong>. Publishing Production chez <strong>Raw Fury</strong>. Plus récemment Producer chez <strong>Untold Games</strong> sur <em>City 20</em>. Aujourd\'hui Producer indépendant, co-fondateur de Scuola Nash et juré à l\'Indie Arena Booth.',
+    'about.p2': 'Du AAA aux équipes d\'un seul développeur. Du QA au publishing. Chaque côté du tableau.',
+    'stats.shipped.h': 'Jeux sortis',
+    'stats.shipped.p': 'Titres publiés entre des rôles en QA, publishing et production, sur PC et consoles.',
+    'stats.shipped.tag': 'Sur plusieurs studios',
+    'stats.positive.h': 'Titre Overwhelmingly Positive',
+    'stats.positive.p': 'J\'ai sorti un titre qui tient la note la plus haute des avis utilisateurs sur Steam : le rating le plus rare du store.',
+    'stats.positive.tag': 'Note Steam',
+    'stats.years.h': 'Ans dans les jeux',
+    'stats.years.p': 'De QA Tester à Publishing Producer à consultant indépendant. Chaque maillon de la pipeline.',
+    'stats.years.tag': 'Depuis 2015',
+    'stats.platforms.h': 'Plateformes de sortie',
+    'stats.platforms.p': 'Certifications, submissions et pipelines de release sur les principaux stores et consoles.',
+    'stats.platforms.tag': 'PS · Xbox · PC · Switch · Stadia',
+    'stats.publishers.h': 'Publishers avec qui j\'ai travaillé',
+    'services.kicker': '<span class="num">02</span> Services',
+    'services.h': 'Comment j\'<em>interviens</em>.',
+    'services.intro': 'Projet par projet, en retainer, ou comme audit ciblé. Le format d\'engagement s\'adapte. Le résultat, non. Deux boîtes à outils distinctes selon de quel côté du deal vous vous trouvez.',
+    'svc1.h': 'Production & Project Operations',
+    'svc1.p': 'Les bonnes choses au bon moment. Schedules, documentation et budgets, de la pré-production jusqu\'au gold master.',
+    'svc1.b1': 'Project management end-to-end',
+    'svc1.b2': 'GDD review & gestion de la documentation',
+    'svc1.b3': 'Workflow audits & optimisation des pipelines',
+    'svc1.b4': 'Scope & risk assessment',
+    'svc1.b5': 'Planification financière de projet',
+    'svc1.b6': 'Consultations ad hoc & peer review',
+    'svc2.h': 'Platform & Release Management',
+    'svc2.p': 'Des releases propres, sur chaque plateforme, sur chaque marché. Certifications, stores, logistique de lancement, QA externe et localisation.',
+    'svc2.b1': 'Console certification (PS, Xbox, Switch)',
+    'svc2.b2': 'Setup des digital stores & submissions',
+    'svc2.b3': 'Logistique de lancement : patches, brands, storefronts',
+    'svc2.b4': 'QA externe, coordination de la localisation & conformité TRC/TCR',
+    'svc2.b5': 'Plateformes développeur PC, Nintendo, PlayStation, Xbox',
+    'svc2.b6': 'Exécution de release cohérente à l\'échelle mondiale',
+    'svc3.h': 'Accompagnement Stratégique Publishing',
+    'svc3.p': 'J\'ai construit mon expérience publishing chez Raw Fury. Je partage le réseau, l\'expérience, et un regard honnête sur comment atteindre les joueurs, sans devenir votre publisher.',
+    'svc3.b1': 'Roadmap réaliste & stratégie de publishing',
+    'svc3.b2': 'Réseau de studios co-dev, porting houses, vendors',
+    'svc3.b3': 'Pitch deck shaping et review pour le fundraising & les deals',
+    'svc3.b4': 'Publisher demo prep et feedback',
+    'svc3.b5': 'Deal milestone & schedule sanity check',
+    'svc4.h': 'Éditions Physiques & Boîtes',
+    'svc4.p': 'Les éditions physiques sont un monde à part. Distributeurs, replication, boards de classification, chacun avec son propre calendrier. J\'ai déjà géré ce pipeline, y compris les boîtes Switch et les disques PS/Xbox.',
+    'svc4.b1': 'Relations avec les distributeurs (US, EU, JP)',
+    'svc4.b2': 'Coordination replication & manufacturing',
+    'svc4.b3': 'Planification des SKU physiques',
+    'svc4.b4': 'Submissions de classification ESRB / PEGI / USK / CERO',
+    'svc4.b5': 'Timeline de production & deadlines disc/cart',
+    'svcP2.h': 'Supervision de Production Externe',
+    'svcP2.p': 'Un producer de votre côté de la table. Milestones, scope et risques suivis sur les studios signés, pour que les surprises remontent tôt, pas lors des réunions de Portfolio Review.',
+    'svcP2.b1': 'Line producing côté publisher',
+    'svcP2.b2': 'Suivi des milestones & deliverables',
+    'svcP2.b3': 'Surveillance des risques sur le scope & le schedule',
+    'svcP2.b4': 'Coordination vendors : port, QA, audio, loc',
+    'svcP2.b5': 'Cert & launch oversight cross-plateforme',
+    'svcP4.h': 'Conseil en Design',
+    'svcP4.p': 'Une lecture design sur des titres signés ou en prospection, menée avec mes partenaires design. Là où le design tient, là où il perd des joueurs, et ce qu\'il faut prototyper avant de greenlighter plus de scope.',
+    'svcP4.b1': 'Onboarding & efficacité de la première session',
+    'svcP4.b2': 'Identification & mitigation des risques design',
+    'svcP4.b3': 'Design prototyping & implementation review',
+    'svcP4.b4': 'Core loop & diagnostics de rétention',
+    'svcP4.b5': 'Design de playtest, observation & analyse',
+    'svcP4.b6': 'Tutorial, UX flow & rythme de la difficulté',
+    'svcP5.h': 'Scouting & Relations Développeurs',
+    'svcP5.p': 'Scouting freelance sur le terrain quand votre équipe ne peut pas être présente. Conversations directes avec les devs, plus des retours sur les tendances et les projets à surveiller.',
+    'svcP5.b1': 'Couverture d\'événements quand vos scouts sont indisponibles',
+    'svcP5.b2': 'Booth walks, dev meetings & pitch sessions en votre nom',
+    'svcP5.b3': 'Trend reports cross-genres & cross-régions',
+    'svcP5.b4': 'Retours sur les studios issus de conversations directes avec les devs',
+    'svcP5.b5': 'Signalement de projets intéressants avant qu\'ils ne circulent',
+    'svcP5.b6': 'Couverture de festivals & showcases (Gamescom, IAB, GDC)',
+    'svcP6.h': 'Mock Reviews pour Jeux en Développement',
+    'svcP6.p': 'Une critique presse sur des titres encore en développement. On joue la build, on écrit la review que vous auriez voulu lire au lancement, et on signale ce que les critiques loueront ou descendront en flammes.',
+    'svcP6.b1': 'Review presse écrite sur la build actuelle',
+    'svcP6.b2': 'Estimation de la fourchette de score avec justification',
+    'svcP6.b3': 'Points forts que les critiques mettront en avant',
+    'svcP6.b4': 'Faiblesses susceptibles d\'apparaître dans les critiques',
+    'svcP6.b5': 'Titres comparables & notes de positioning',
+    'svcP6.b6': 'Recommandations pour rehausser le score perçu',
+    'faq.kicker': '<span class="num">03</span> Questions fréquentes',
+    'faq.h': 'Des questions, <em>avant même</em> qu\'on se parle.',
+    'faq.intro': 'Ce qu\'on me demande au premier contact, avec des réponses déjà prêtes. Si la vôtre n\'est pas là, posez-la : mieux vaut savoir sur quoi on s\'entend dès le départ.',
+    'faq1.q': 'Quels sont vos tarifs ?',
+    'faq1.a': 'Ça dépend du format. Pour les audits et les projets définis, le tarif est de 250 €/jour. Pour les retainers (minimum 3 mois), le tarif est de 3 200 €/mois, une meilleure affaire pour les deux parties quand l\'engagement est continu. Tous les tarifs s\'entendent hors TVA et hors charges à mon compte.',
+    'faq2.q': 'Signez-vous des NDA avant l\'appel de découverte ?',
+    'faq2.a': 'Avec plaisir, si votre projet le justifie. Pour la plupart des premières conversations, un "ça reste entre nous" verbal suffit. Je suis dans l\'industrie depuis assez longtemps pour savoir tenir ma langue.',
+    'faq3.q': 'Qui conserve l\'IP, la documentation, les processus après votre départ ?',
+    'faq3.a': 'Vous. Tout ce que je produis, des schedules aux GDD reviews, des pipelines à la cert prep, vous appartient. Le sens de l\'engagement, c\'est que la valeur reste chez vous, pas chez moi.',
+    'faq4.q': 'Quel est le plus petit engagement que vous acceptez ?',
+    'faq4.a': 'Une consultation payante de deux heures à 120 € si vous avez besoin d\'un avis sur une décision précise. En dessous, l\'appel de découverte est gratuit : une demi-heure, sans pitch.',
+    'faq5.q': 'Pouvez-vous co-sourcer des prestataires ? Porting, QA externe, audio, localisation ?',
+    'faq5.a': 'Oui. Neuf ans dans l\'industrie, c\'est un réseau de studios de confiance, porting houses, partenaires QA, équipes audio et vendors de localisation. Je les présente, les briefe et les coordonne dans le cadre de l\'engagement. Aucune commission de part et d\'autre.',
+    'faq6.q': 'Vous êtes en pré-financement ou sans publisher. Vous nous parlerez quand même ?',
+    'faq6.a': 'Oui. L\'appel de découverte se fiche du stade où vous en êtes. Si vous avez besoin de structurer un pitch deck ou de préparer une publisher demo, c\'est un service en soi. Si vous ne pouvez vraiment rien vous permettre pour l\'instant, je vous oriente vers les bonnes lectures ou les bonnes personnes, sans contrepartie.',
+    'faq.note': 'Ce sont mes conditions standard. Si votre situation est différente, mentionnez-le lors de l\'appel. Je préfère trouver un format qui fonctionne plutôt que de passer à côté d\'un bon projet pour une question de chiffres.',
+    'contact.kicker': '<span class="num">04</span> Parlons-en',
+    'contact.h': 'Dites-moi sur quoi vous travaillez.',
+    'contact.p': 'Parlez-moi du jeu, de son stade, et de ce qui bloque. Si on est compatibles, on fixe un appel de 30 minutes. Sinon, je vous oriente vers quelqu\'un de plus adapté.',
+    'contact.note': 'P.S. Je réponds généralement sous 1 à 3 jours ouvrés. Si vous n\'avez pas de nouvelles dans cette fenêtre, n\'hésitez pas à me relancer.',
+    'form.name.label': 'Votre nom <span class="req" aria-hidden="true">*</span>',
+    'form.name.placeholder': 'Votre nom',
+    'form.company.label': 'Studio ou entreprise',
+    'form.company.placeholder': 'Votre studio ou entreprise',
+    'form.email.label': 'Email <span class="req" aria-hidden="true">*</span>',
+    'form.email.placeholder': 'vous@studio.com',
+    'form.msg.label': 'Message <span class="req" aria-hidden="true">*</span>',
+    'form.msg.placeholder': 'Sur quoi vous travaillez, où vous êtes bloqués, quand vous en avez besoin.',
+    'form.status': 'Ouvre votre client mail · aucune donnée enregistrée.',
+    'form.success': 'Message prêt. Vérifiez votre client mail.',
+    'form.submit': 'Envoyer',
+    'form.submitting': 'Ouverture du mail…',
+    'form.err.name': 'Merci d\'ajouter votre nom.',
+    'form.err.email.required': 'L\'email est requise.',
+    'form.err.email.invalid': 'Cet email ne semble pas valide.',
+    'form.err.msg': 'Un court message, s\'il vous plaît.',
+    'form.subject': 'Demande de projet :',
+    'footer.sayhi': 'Dites bonjour, <em>quand vous voulez.</em>',
+    'footer.email': 'Email',
+    'footer.email.aria': 'Écrire à Michele',
+    'footer.linkedin': 'LinkedIn',
+    'footer.linkedin.aria': 'Profil LinkedIn de Spritz Consulting',
+    'footer.copy': '© 2026 Spritz Consulting · Tous droits réservés',
+  };
   const EN_OVERRIDES = {
     'form.err.name': 'Please add your name.',
     'form.err.email.required': 'Email is required.',
@@ -2804,8 +2965,9 @@ body.is-tab-hidden .dot{
     'form.submitting': 'Opening mail…',
   };
 
+  const DICTS = { it: IT, fr: FR };
   let currentLang = 'en';
-  const tr = (key) => (currentLang === 'it' ? (IT[key] ?? '') : (EN_OVERRIDES[key] ?? ''));
+  const tr = (key) => (currentLang === 'en' ? (EN_OVERRIDES[key] ?? '') : (DICTS[currentLang]?.[key] ?? ''));
 
   const cacheOriginal = (el) => {
     let entry = ORIG.get(el);
@@ -2822,14 +2984,15 @@ body.is-tab-hidden .dot{
   };
 
   const applyLang = (lang) => {
-    currentLang = (lang === 'it') ? 'it' : 'en';
+    currentLang = DICTS[lang] ? lang : 'en';
     document.documentElement.setAttribute('lang', currentLang);
 
+    const dict = DICTS[currentLang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const orig = cacheOriginal(el);
       const key = el.dataset.i18n;
-      if (currentLang === 'it') {
-        const val = IT[key];
+      if (dict) {
+        const val = dict[key];
         if (val == null) return;
         el.innerHTML = val;
       } else {
@@ -2839,17 +3002,17 @@ body.is-tab-hidden .dot{
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       const orig = cacheOriginal(el);
       const key = el.dataset.i18nPlaceholder;
-      el.setAttribute('placeholder', currentLang === 'it' ? (IT[key] ?? orig.placeholder ?? '') : (orig.placeholder ?? ''));
+      el.setAttribute('placeholder', dict ? (dict[key] ?? orig.placeholder ?? '') : (orig.placeholder ?? ''));
     });
     document.querySelectorAll('[data-i18n-alt]').forEach(el => {
       const orig = cacheOriginal(el);
       const key = el.dataset.i18nAlt;
-      el.setAttribute('alt', currentLang === 'it' ? (IT[key] ?? orig.alt ?? '') : (orig.alt ?? ''));
+      el.setAttribute('alt', dict ? (dict[key] ?? orig.alt ?? '') : (orig.alt ?? ''));
     });
     document.querySelectorAll('[data-i18n-aria]').forEach(el => {
       const orig = cacheOriginal(el);
       const key = el.dataset.i18nAria;
-      el.setAttribute('aria-label', currentLang === 'it' ? (IT[key] ?? orig.aria ?? '') : (orig.aria ?? ''));
+      el.setAttribute('aria-label', dict ? (dict[key] ?? orig.aria ?? '') : (orig.aria ?? ''));
     });
 
     document.querySelectorAll('[data-lang-target]').forEach(btn => {
@@ -3353,9 +3516,23 @@ body.is-tab-hidden .dot{
   })();
 
   // Bootstrap language (after form/validate are in scope)
-  let savedLang = 'en';
-  try { savedLang = localStorage.getItem(LANG_KEY) || 'en'; } catch (e) {}
-  applyLang(savedLang);
+  let savedLang = null;
+  try { savedLang = localStorage.getItem(LANG_KEY); } catch (e) {}
+  if (savedLang) {
+    applyLang(savedLang);
+  } else {
+    applyLang('en');
+    fetch('/cdn-cgi/trace', { cache: 'no-store' })
+      .then(r => r.ok ? r.text() : '')
+      .then(t => {
+        const m = t.match(/^loc=([A-Z]{2})$/m);
+        const country = m ? m[1] : null;
+        const COUNTRY_LANG = { FR: 'fr', BE: 'fr', CH: 'fr', LU: 'fr' };
+        const detected = country && COUNTRY_LANG[country];
+        if (detected) applyLang(detected);
+      })
+      .catch(() => {});
+  }
 })();
 
 /* Pause ambient animations when tab loses focus (perf budget) */
