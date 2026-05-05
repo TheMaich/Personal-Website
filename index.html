@@ -1447,6 +1447,15 @@ body.is-tab-hidden .dot{
   padding: clamp(20px, 2.4vw, 28px) 0;
   cursor: pointer;
 }
+.rate-faq-link{
+  color: var(--clay);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+}
+.rate-faq-link:hover,
+.rate-faq-link:focus-visible{ opacity: 0.8; }
 .faq-question{
   margin: 0;
   flex: 1;
@@ -1992,7 +2001,7 @@ body.is-tab-hidden .dot{
               </div>
               <div class="meta-row">
                 <dt data-i18n="meta.rate.dt">Rate</dt>
-                <dd data-i18n="meta.rate.dd">€250/day · €3,200/month retainer (see FAQ)</dd>
+                <dd data-i18n="meta.rate.dd" data-i18n-html>€250/day · €3,200/month retainer (<a href="#faq-answer-1" class="rate-faq-link" aria-label="See rate FAQ">see FAQ</a>)</dd>
               </div>
             </dl>
           </aside>
@@ -2574,7 +2583,7 @@ body.is-tab-hidden .dot{
         <button type="button" data-lang-target="en" aria-pressed="true" aria-label="English">EN</button>
         <button type="button" data-lang-target="it" aria-pressed="false" aria-label="Italiano">IT</button>
         <button type="button" data-lang-target="fr" aria-pressed="false" aria-label="Passer en français" hidden>FR</button>
-        <button type="button" data-lang-target="es" aria-pressed="false" aria-label="Cambiar a español">ES</button>
+        <button type="button" data-lang-target="es" aria-pressed="false" aria-label="Cambiar a español" hidden>ES</button>
       </div>
     </div>
     <span class="copy" data-i18n="footer.copy">&copy; 2026 Spritz Consulting &middot; All rights reserved</span>
@@ -2653,7 +2662,7 @@ body.is-tab-hidden .dot{
     'meta.engage.dt': 'Formati',
     'meta.engage.dd': 'Progetto · Retainer · Audit',
     'meta.rate.dt': 'Tariffa',
-    'meta.rate.dd': '€250/giorno · €3.200/mese retainer (vedi FAQ)',
+    'meta.rate.dd': '€250/giorno · €3.200/mese retainer (<a href="#faq-answer-1" class="rate-faq-link" aria-label="See rate FAQ">vedi FAQ</a>)',
 
     'marquee.h': 'Studi, organizzazioni e giochi con cui ho lavorato',
 
@@ -2836,7 +2845,7 @@ body.is-tab-hidden .dot{
     'meta.engage.dt': 'Formats',
     'meta.engage.dd': 'Projet · Retainer · Audit',
     'meta.rate.dt': 'Tarif',
-    'meta.rate.dd': '€250/jour · €3 200/mois en retainer (voir FAQ)',
+    'meta.rate.dd': '€250/jour · €3 200/mois en retainer (<a href="#faq-answer-1" class="rate-faq-link" aria-label="See rate FAQ">voir FAQ</a>)',
 
     // Marquee
     'marquee.h': 'Studios, organisations et jeux sur lesquels j\'ai travaillé',
@@ -3029,7 +3038,7 @@ body.is-tab-hidden .dot{
     'meta.engage.dt': 'Formatos',
     'meta.engage.dd': 'Proyecto · Retainer · Audit',
     'meta.rate.dt': 'Tarifa',
-    'meta.rate.dd': '€250/día · €3.200/mes retainer (ver FAQ)',
+    'meta.rate.dd': '€250/día · €3.200/mes retainer (<a href="#faq-answer-1" class="rate-faq-link" aria-label="See rate FAQ">ver FAQ</a>)',
     'marquee.h': 'Estudios, organizaciones y juegos con los que he trabajado',
     'about.kicker': '<span class="num">01</span> Mi Trayectoria',
     'about.h': 'Lado estudio, lado publisher, y todo lo que hay en medio.',
@@ -3627,6 +3636,19 @@ body.is-tab-hidden .dot{
         const btn = header.querySelector('.faq-toggle');
         if (btn) btn.click();
       });
+    });
+  })();
+
+  // Rate link in hero card: open FAQ1 if collapsed, scroll to FAQ section
+  (function initRateFaqLink(){
+    document.addEventListener('click', e => {
+      const link = e.target.closest('.rate-faq-link');
+      if (!link) return;
+      e.preventDefault();
+      const btn = document.querySelector('.faq-toggle[aria-controls="faq-answer-1"]');
+      if (btn && btn.getAttribute('aria-expanded') !== 'true') btn.click();
+      const faq = document.getElementById('faq');
+      if (faq) faq.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   })();
 
