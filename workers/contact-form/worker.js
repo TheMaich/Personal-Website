@@ -10,10 +10,12 @@
  *   get a fake 200 so they stop retrying, and nothing is stored.
  * - Rate limit: max SUBMISSIONS_PER_WINDOW per IP per RATE_WINDOW_SECONDS,
  *   tracked in the same KV namespace under rl: keys with a TTL.
- * - Notification email: sent through Cloudflare Email Routing when the
- *   NOTIFY send_email binding is configured (free tier, first party,
- *   requires Email Routing enabled on the zone; see README). If the binding
- *   is absent or sending fails, the submission still lands in KV.
+ * - Notification email: sent through the Resend HTTP API (resend.com) using
+ *   the RESEND_API_KEY secret. Cloudflare Email Routing is intentionally not
+ *   used: Resend verifies the sending domain with a DNS TXT record only, so
+ *   the zone MX stays on the existing Gmail inbox. If the key is missing or
+ *   the send fails, the submission still lands in KV and the Worker returns a
+ *   real error (502) instead of a silent 200.
  * - CORS: only the production origins may POST.
  */
 
@@ -22,12 +24,12 @@ const ALLOWED_ORIGINS = [
   'https://www.spritzconsulting.com',
 ];
 
-// Form notifications go to hello@spritzconsulting.com, which Cloudflare Email
-// Routing forwards to the personal inbox (michele@spritzconsulting.com). The
-// Worker only knows about the hello@ alias; the forward is a zone-side routing
-// rule, so the personal address can change without touching this code.
-const NOTIFY_TO = 'hello@spritzconsulting.com';
-const NOTIFY_FROM = 'contact-form@spritzconsulting.com';
+// Where notifications land. Overridable via the NOTIFY_TO var in wrangler.toml
+// so the destination inbox can change without a code edit. The From address
+// must sit on a domain verified in Resend (spritzconsulting.com); it is what
+// Resend authenticates, not where replies go.
+const DEFAULT_NOTIFY_TO = 'hello@spritzconsulting.com';
+const NOTIFY_FROM = 'Spritz Contact Form <contact-form@spritzconsulting.com>';
 
 const RATE_WINDOW_SECONDS = 600;
 const SUBMISSIONS_PER_WINDOW = 5;
@@ -72,8 +74,8 @@ async function checkRateLimit(env, ip) {
   return true;
 }
 
-function buildNotificationMime(submission) {
-  const lines = [
+function buildNotificationText(submission) {
+  return [
     'Name: ' + (submission.name || '(empty)'),
     'Company: ' + (submission.company || '(empty)'),
     'Email: ' + submission.email,
@@ -82,32 +84,40 @@ function buildNotificationMime(submission) {
     'Received: ' + submission.receivedAt,
     '',
     submission.message,
-  ];
-  const headers = [
-    'From: Spritz Contact Form <' + NOTIFY_FROM + '>',
-    'To: ' + NOTIFY_TO,
-    'Reply-To: ' + submission.email,
-    'Subject: New contact form submission',
-    'MIME-Version: 1.0',
-    'Content-Type: text/plain; charset=utf-8',
-    'Message-ID: <' + submission.key + '@spritzconsulting.com>',
-    'Date: ' + new Date(submission.receivedAt).toUTCString(),
-  ];
-  return headers.join('\r\n') + '\r\n\r\n' + lines.join('\n');
+  ].join('\n');
 }
 
 // Throws on any delivery failure so the caller can surface a real error.
 // KV already holds the submission before this runs, so a throw never loses
 // the lead; it only tells the visitor (and our logs) that the notification
 // did not go out, instead of the old silent 200.
+//
+// Uses Resend's HTTP API. reply_to is the visitor's address so a reply from
+// the inbox goes straight back to them. A non-2xx response carries a JSON
+// error body from Resend; we surface its status so logs show why it failed.
 async function sendNotification(env, submission) {
-  if (!env.NOTIFY) {
-    throw new Error('notify_binding_missing');
+  if (!env.RESEND_API_KEY) {
+    throw new Error('resend_api_key_missing');
   }
-  const { EmailMessage } = await import('cloudflare:email');
-  const raw = buildNotificationMime(submission);
-  const message = new EmailMessage(NOTIFY_FROM, NOTIFY_TO, raw);
-  await env.NOTIFY.send(message);
+  const to = env.NOTIFY_TO || DEFAULT_NOTIFY_TO;
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + env.RESEND_API_KEY,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: NOTIFY_FROM,
+      to: [to],
+      reply_to: submission.email,
+      subject: 'New contact form submission',
+      text: buildNotificationText(submission),
+    }),
+  });
+  if (!response.ok) {
+    const detail = await response.text();
+    throw new Error('resend_http_' + response.status + ': ' + detail.slice(0, 300));
+  }
 }
 
 export default {

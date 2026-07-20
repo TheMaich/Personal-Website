@@ -15,16 +15,18 @@ routes = [
 binding = "CONTACT_SUBMISSIONS"
 id = "REPLACE_WITH_NAMESPACE_ID"
 
-# Notification email through Cloudflare Email Routing (free tier, no third
-# party signup). Notifications are sent to hello@spritzconsulting.com, which a
-# zone routing rule forwards to the personal inbox (michele@spritzconsulting.com).
-# REQUIRES, before `wrangler deploy` will succeed and mail will actually arrive:
-#   1. Email Routing enabled on the spritzconsulting.com zone (adds MX + SPF).
-#   2. hello@spritzconsulting.com set as the send_email destination and verified
-#      (Cloudflare sends a confirmation email that must be clicked), plus a
-#      routing rule forwarding hello@ -> michele@spritzconsulting.com.
-# The Worker treats this binding as required: without it every submission
-# returns 502 notification_failed instead of a silent 200, by design.
-[[send_email]]
-name = "NOTIFY"
-destination_address = "hello@spritzconsulting.com"
+# Notification email through the Resend HTTP API (resend.com). Chosen over
+# Cloudflare Email Routing because Resend verifies the sending domain with a
+# DNS TXT record only, leaving the zone MX on the existing Gmail inbox.
+#
+# REQUIRES, before mail will actually arrive:
+#   1. A Resend account with spritzconsulting.com added and verified (add the
+#      TXT/DKIM records Resend shows; MX is untouched, so Gmail keeps working).
+#   2. The API key stored as a secret, NOT in this file:
+#        npx wrangler secret put RESEND_API_KEY
+#   3. NOTIFY_TO below set to the inbox that should receive notifications.
+# The Worker treats the send as required: if the key is missing or Resend
+# returns non-2xx, the submission returns 502 notification_failed (not a
+# silent 200) and stays recoverable in KV.
+[vars]
+NOTIFY_TO = "hello@spritzconsulting.com"

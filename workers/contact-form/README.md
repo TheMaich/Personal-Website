@@ -1,8 +1,8 @@
 # Spritz contact form Worker
 
 Backend for the contact form on spritzconsulting.com. Accepts a JSON POST,
-validates it, stores it in Workers KV, and optionally emails a notification
-through Cloudflare Email Routing.
+validates it, stores it in Workers KV, and emails a notification through the
+Resend HTTP API.
 
 ## Endpoint
 
@@ -78,24 +78,33 @@ timestamp. `rl:` keys are rate-limit counters and expire on their own.
 
 ## Email notification (required, free, first party)
 
-The Worker sends a notification to hello@spritzconsulting.com through
-Cloudflare Email Routing, and a zone routing rule forwards hello@ to the
-personal inbox (michele@spritzconsulting.com). No third-party service and no
-signup. Notification is REQUIRED: if the send fails, or the `NOTIFY` binding is
-missing, the Worker returns `502 {"ok":false,"error":"notification_failed"}`
-instead of a silent 200. The submission is still written to KV first, so no lead
-is lost even on a 502; it stays recoverable with the read commands above.
+The Worker sends a notification through the Resend HTTP API. Resend was chosen
+over Cloudflare Email Routing because it verifies the sending domain with a DNS
+TXT record only: the zone MX is untouched, so the existing Gmail inbox keeps
+receiving normal mail. Notification is REQUIRED: if `RESEND_API_KEY` is missing
+or Resend returns a non-2xx status, the Worker returns
+`502 {"ok":false,"error":"notification_failed"}` instead of a silent 200. The
+submission is written to KV first, so no lead is lost even on a 502; it stays
+recoverable with the read commands above.
 
-One-time setup on the zone (needed before `wrangler deploy` succeeds and mail
-arrives):
+One-time setup (needed before mail arrives):
 
-1. Cloudflare dashboard, the spritzconsulting.com zone, Email, Email
-   Routing: enable it and follow the DNS prompts (MX + SPF records).
-2. Set `hello@spritzconsulting.com` as the send_email destination and verify it
-   (Cloudflare sends a confirmation email that must be clicked), then add a
-   routing rule forwarding `hello@` -> `michele@spritzconsulting.com` so the
-   notification reaches the personal inbox.
-3. The `[[send_email]]` block in `wrangler.toml` is already active.
+1. Create a Resend account (free tier covers ~3,000 emails/month) and add the
+   `spritzconsulting.com` domain. Add the DNS records Resend shows (TXT/DKIM,
+   and its Return-Path CNAME). These do not touch the MX record, so Gmail is
+   unaffected. Wait for Resend to mark the domain Verified.
+2. Create an API key in Resend, then store it as a Worker secret (never commit
+   it):
+
+   ```
+   npx wrangler secret put RESEND_API_KEY
+   ```
+
+3. Set `NOTIFY_TO` in `wrangler.toml` to the inbox that should receive
+   notifications (defaults to `hello@spritzconsulting.com`). The From address
+   is `contact-form@spritzconsulting.com`; it must sit on the verified domain.
+   `reply_to` is set to the visitor's address, so replying from the inbox goes
+   straight back to them.
 4. `npx wrangler deploy`.
 
 Note: before deploying, replace `REPLACE_WITH_NAMESPACE_ID` in `wrangler.toml`
