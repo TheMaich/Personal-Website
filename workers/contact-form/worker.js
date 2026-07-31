@@ -2,7 +2,7 @@
  * Spritz Consulting contact form backend.
  *
  * POST /api/contact
- * Body: JSON { name?, company?, email, message, page?, referrer?, website? }
+ * Body: JSON { name?, company?, email, message, found_via?, page?, referrer?, website? }
  *
  * - Validates email and message server side.
  * - Persists every valid submission to the CONTACT_SUBMISSIONS KV namespace.
@@ -79,6 +79,7 @@ function buildNotificationText(submission) {
     'Name: ' + (submission.name || '(empty)'),
     'Company: ' + (submission.company || '(empty)'),
     'Email: ' + submission.email,
+    'Found via: ' + (submission.foundVia || '(not answered)'),
     'Page: ' + (submission.page || '(unknown)'),
     'Referrer: ' + (submission.referrer || '(none)'),
     'Received: ' + submission.receivedAt,
@@ -169,6 +170,11 @@ export default {
       company: clip(body.company, MAX_FIELD_LENGTH),
       email,
       message,
+      // Optional self-reported attribution. Free-text-safe: clipped like any
+      // other field. The site sends a fixed slug (linkedin, search, ...), but
+      // the Worker does not enforce the vocabulary so the form can add options
+      // without a Worker deploy.
+      foundVia: clip(body.found_via, MAX_FIELD_LENGTH),
       page: clip(body.page, 500),
       referrer: clip(body.referrer, 500),
       ip,

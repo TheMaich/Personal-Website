@@ -14,6 +14,7 @@ Resend HTTP API.
   "company": "optional",
   "email": "required, validated",
   "message": "required, non empty",
+  "found_via": "optional, self-reported attribution slug (linkedin, search, referral, reddit, event, newsletter, other)",
   "page": "optional, path the form was on",
   "referrer": "optional, document.referrer",
   "website": "honeypot, must stay empty"

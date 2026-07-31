@@ -1,0 +1,25 @@
+name = "spritz-events-sink"
+main = "worker.js"
+compatibility_date = "2026-07-01"
+
+# Same-origin so the page can POST without CORS preflight, and so the export
+# readback lives on the production domain behind the shared secret.
+routes = [
+  { pattern = "spritzconsulting.com/api/events", zone_name = "spritzconsulting.com" },
+  { pattern = "spritzconsulting.com/api/events/export", zone_name = "spritzconsulting.com" },
+  { pattern = "www.spritzconsulting.com/api/events", zone_name = "spritzconsulting.com" }
+]
+
+# Telemetry lives in its OWN namespace, never CONTACT_SUBMISSIONS. Leads and
+# telemetry have different sensitivity and retention.
+# Create it once, then paste the id here:
+#   npx wrangler kv namespace create FUNNEL_EVENTS
+[[kv_namespaces]]
+binding = "FUNNEL_EVENTS"
+id = "REPLACE_WITH_NAMESPACE_ID"
+
+# The export readback is gated by a shared secret. Set it as a Worker secret,
+# NOT here, then read events back with:
+#   npx wrangler secret put EXPORT_SECRET
+# The export endpoint fails closed (HTTP 500) until this secret exists, so an
+# unconfigured deploy never leaks telemetry.

@@ -3085,6 +3085,23 @@ body.is-tab-hidden .dot{
               <textarea id="f-msg" name="message" required rows="5" data-i18n-placeholder="form.msg.placeholder" placeholder="What you're working on, where you're stuck, when you need it shipped."></textarea>
               <span class="err" data-err-for="f-msg" aria-live="polite"></span>
             </div>
+            <div class="field wide">
+              <label for="f-found" data-i18n="form.found.label">Where did you find me?</label>
+              <!-- Optional attribution. Fixed English slug values so stored data stays
+                   consistent across languages; the visible text is translated, the value is not.
+                   This is the only reliable signal for the referrer-stripped LinkedIn "direct" bucket. -->
+              <select id="f-found" name="found_via" autocomplete="off">
+                <option value="" data-i18n="form.found.opt.none">Optional, but it helps me</option>
+                <option value="linkedin" data-i18n="form.found.opt.linkedin">LinkedIn</option>
+                <option value="search" data-i18n="form.found.opt.search">Google or a web search</option>
+                <option value="referral" data-i18n="form.found.opt.referral">A referral or word of mouth</option>
+                <option value="reddit" data-i18n="form.found.opt.reddit">Reddit or a forum</option>
+                <option value="event" data-i18n="form.found.opt.event">An event or conference</option>
+                <option value="newsletter" data-i18n="form.found.opt.newsletter">A newsletter or podcast</option>
+                <option value="other" data-i18n="form.found.opt.other">Somewhere else</option>
+              </select>
+              <span class="err" data-err-for="f-found" aria-live="polite"></span>
+            </div>
             <div class="hp-field" aria-hidden="true">
               <label for="f-website" tabindex="-1">Website</label>
               <input id="f-website" name="website" tabindex="-1" autocomplete="off" />
@@ -3372,6 +3389,15 @@ body.is-tab-hidden .dot{
     'form.email.placeholder': 'tu@studio.com',
     'form.msg.label': 'Messaggio <span class="req" aria-hidden="true">*</span>',
     'form.msg.placeholder': 'Su cosa stai lavorando, dove sei bloccato, quando ti serve shippato.',
+    'form.found.label': 'Come mi hai trovato?',
+    'form.found.opt.none': 'Facoltativo, ma mi aiuta',
+    'form.found.opt.linkedin': 'LinkedIn',
+    'form.found.opt.search': 'Google o una ricerca sul web',
+    'form.found.opt.referral': 'Passaparola o su segnalazione',
+    'form.found.opt.reddit': 'Reddit o un forum',
+    'form.found.opt.event': 'Un evento o una conferenza',
+    'form.found.opt.newsletter': 'Una newsletter o un podcast',
+    'form.found.opt.other': 'Da qualche altra parte',
     'form.submit': 'Invia',
     'form.submitting': 'Invio…',
     'form.err.email.required': 'L’email è obbligatoria.',
@@ -3586,6 +3612,15 @@ body.is-tab-hidden .dot{
     'form.email.placeholder': 'vous@studio.com',
     'form.msg.label': 'Message <span class="req" aria-hidden="true">*</span>',
     'form.msg.placeholder': 'Sur quoi vous travaillez, où vous êtes bloqués, pour quand.',
+    'form.found.label': 'Comment m\'avez-vous trouvé ?',
+    'form.found.opt.none': 'Facultatif, mais ça m\'aide',
+    'form.found.opt.linkedin': 'LinkedIn',
+    'form.found.opt.search': 'Google ou une recherche web',
+    'form.found.opt.referral': 'Une recommandation ou le bouche-à-oreille',
+    'form.found.opt.reddit': 'Reddit ou un forum',
+    'form.found.opt.event': 'Un événement ou une conférence',
+    'form.found.opt.newsletter': 'Une newsletter ou un podcast',
+    'form.found.opt.other': 'Ailleurs',
     'form.status': 'Ouvre votre messagerie · aucune donnée enregistrée.',
     'form.success': 'Message prêt. Vérifiez votre messagerie.',
     'form.submit': 'Envoyer',
@@ -3761,6 +3796,15 @@ body.is-tab-hidden .dot{
     'form.email.placeholder': 'tu@estudio.com',
     'form.msg.label': 'Mensaje <span class="req" aria-hidden="true">*</span>',
     'form.msg.placeholder': 'En qué estás trabajando, dónde estás atascado, cuándo lo necesitas.',
+    'form.found.label': '¿Cómo me encontraste?',
+    'form.found.opt.none': 'Opcional, pero me ayuda',
+    'form.found.opt.linkedin': 'LinkedIn',
+    'form.found.opt.search': 'Google o una búsqueda web',
+    'form.found.opt.referral': 'Una recomendación o el boca a boca',
+    'form.found.opt.reddit': 'Reddit o un foro',
+    'form.found.opt.event': 'Un evento o una conferencia',
+    'form.found.opt.newsletter': 'Un boletín o un podcast',
+    'form.found.opt.other': 'En otro sitio',
     'form.status': 'Abre tu cliente de correo · ningún dato almacenado.',
     'form.success': 'Mensaje listo. Comprueba tu cliente de correo.',
     'form.submit': 'Enviar',
@@ -4141,9 +4185,41 @@ body.is-tab-hidden .dot{
     }
   }
 
-  // Analytics helpers (Zaraz is injected by Cloudflare; guard every call)
+  // Analytics helpers. Two sinks, on purpose:
+  //   1. Zaraz (if a destination is ever configured in the dashboard).
+  //   2. The first-party events-sink Worker at /api/events, which we own and
+  //      can read back. Zaraz forwards nothing until a Tools destination is
+  //      set, so relying on it alone means the six events land nowhere.
+  // sendBeacon is used so cta_click / booking_click survive the navigation
+  // they trigger; it falls back to a keepalive fetch where Beacon is absent.
+  const FUNNEL_UTM_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+  // First-touch UTM capture: read the landing URL's UTMs once and keep them
+  // for the session, so every event carries the campaign that brought the
+  // visitor in even after they navigate to a UTM-less internal page.
+  const firstTouchUtm = (() => {
+    try {
+      const stored = sessionStorage.getItem('sc_utm');
+      if (stored) return JSON.parse(stored);
+      const params = new URLSearchParams(location.search);
+      const utm = {};
+      for (const k of FUNNEL_UTM_KEYS) { if (params.get(k)) utm[k] = params.get(k); }
+      if (Object.keys(utm).length) sessionStorage.setItem('sc_utm', JSON.stringify(utm));
+      return utm;
+    } catch (err) { return {}; }
+  })();
+  const sinkEvent = (event, props) => {
+    const payload = JSON.stringify({ event, props: props || {}, page: location.pathname, utm: firstTouchUtm });
+    try {
+      const blob = new Blob([payload], { type: 'application/json' });
+      if (navigator.sendBeacon && navigator.sendBeacon('/api/events', blob)) return;
+    } catch (err) { /* fall through to fetch */ }
+    try {
+      fetch('/api/events', { method: 'POST', body: payload, headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(() => {});
+    } catch (err) { /* best effort; never block the UI */ }
+  };
   const track = (event, props) => {
     if (window.zaraz) { zaraz.track(event, props || {}); }
+    sinkEvent(event, props);
   };
   // Delegated so links re-rendered by the language switcher keep firing.
   document.addEventListener('click', (e) => {
@@ -4249,6 +4325,7 @@ body.is-tab-hidden .dot{
           company: (data.get('company') || '').trim(),
           email: (data.get('email') || '').trim(),
           message: (data.get('message') || '').trim(),
+          found_via: (data.get('found_via') || '').trim(),
           website: (data.get('website') || '').trim(),
           page: location.pathname,
           referrer: document.referrer || '',
