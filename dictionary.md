@@ -102,8 +102,8 @@
   IT: Inoltre
   ────────────────────────────────────────
   key: meta.also.dd
-  EN: 9 yrs across Raw Fury, Rebellion & 34BigThings
-  IT: 9 anni in Raw Fury, Rebellion & 34BigThings
+  EN: 10 yrs across Raw Fury, Rebellion & 34BigThings
+  IT: 10 anni in Raw Fury, Rebellion & 34BigThings
   ────────────────────────────────────────
   key: meta.recent.dt
   EN: Recent
@@ -558,9 +558,9 @@
   IT: Puoi co-sourciare fornitori? Porting, QA esterno, audio, localizzazione?
   ────────────────────────────────────────
   key: faq5.a
-  EN: Yes. Nine years in the industry built a network of trusted studios, porting houses, QA partners, audio teams, and
+  EN: Yes. Ten years in the industry built a network of trusted studios, porting houses, QA partners, audio teams, and
     loc vendors. I introduce, brief, and coordinate them as part of the engagement. No referral fees on either side.
-  IT: Sì. Nove anni nel settore hanno costruito una rete di studi, porting house, partner QA, team audio e fornitori di
+  IT: Sì. Dieci anni nel settore hanno costruito una rete di studi, porting house, partner QA, team audio e fornitori di
     localizzazione fidati. Faccio introduzioni, brief e coordinamento come parte dell'ingaggio. Niente referral fee da
     nessuna parte.
   ────────────────────────────────────────
