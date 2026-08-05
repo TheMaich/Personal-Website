@@ -195,7 +195,7 @@
   ────────────────────────────────────────
   key: stats.years.tag
   EN: (IT-only)
-  IT: Dal 2015
+  IT: Dal 2016
   ────────────────────────────────────────
   key: stats.platforms.h
   EN: Platforms shipped on
