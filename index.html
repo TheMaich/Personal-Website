@@ -2145,6 +2145,7 @@ body.is-tab-hidden .dot{
 .testi-card--r3{ --testi-tilt: -3deg; }
 .testi-card--r4{ --testi-tilt: 7deg; }
 .testi-card--r5{ --testi-tilt: -5deg; }
+.testi-card--r6{ --testi-tilt: 6deg; }
 /* Company logo, dead-centered on the card. Absolutely positioned with auto
    margins so centering binds to the img itself and the card, immune to the
    picture wrapper (display:contents made Chrome mis-resolve % heights).
@@ -2968,6 +2969,7 @@ body.is-tab-hidden .dot{
         <div class="testi-visual-card testi-card--r3"><picture><source srcset="assets/logo-rawfury.webp" type="image/webp" /><img class="testi-logo" src="assets/logo-rawfury.png" alt="" width="270" height="186" loading="eager" decoding="async" /></picture></div>
         <div class="testi-visual-card testi-card--r4"><picture><source srcset="assets/logo-rawfury.webp" type="image/webp" /><img class="testi-logo" src="assets/logo-rawfury.png" alt="" width="270" height="186" loading="eager" decoding="async" /></picture></div>
         <div class="testi-visual-card testi-card--r5"><picture><source srcset="assets/logo-rebellion.webp" type="image/webp" /><img class="testi-logo testi-logo--wide" src="assets/logo-rebellion.png" alt="" width="500" height="222" loading="eager" decoding="async" /></picture></div>
+        <div class="testi-visual-card testi-card--r6"><picture><source srcset="assets/logo-untoldgames.webp" type="image/webp" /><img class="testi-logo" src="assets/logo-untoldgames.png" alt="" width="257" height="196" loading="eager" decoding="async" /></picture></div>
       </div>
 
       <div class="testi-copy">
@@ -3000,6 +3002,12 @@ body.is-tab-hidden .dot{
             <h3 class="testi-name">Ilya Z.</h3>
             <p class="testi-role" data-i18n="testi5.role">QA Director, ex-Rebellion</p>
             <blockquote class="testi-quote" data-i18n="testi5.q" data-i18n-html>&ldquo;His dedication, positivity and most importantly can do attitude made him a key player within our teams! [...] This included leading all QA efforts on several successive projects on a completely new platform with its own unique pipeline and challenges.&rdquo;</blockquote>
+          </article>
+
+          <article class="testi-entry" data-testi-entry="5" aria-hidden="true" inert>
+            <h3 class="testi-name">Michele B.</h3>
+            <p class="testi-role" data-i18n="testi6.role">Videogame Producer at Untold Games</p>
+            <blockquote class="testi-quote" data-i18n="testi6.q" data-i18n-html>&ldquo;As a Producer, he demonstrated great listening skills, and the ability to break down game dev challenges into practical solutions. He is a thoughtful professional who brings order to production with a good balance of pragmatism and empathy.&rdquo;</blockquote>
           </article>
         </div>
 
@@ -3348,7 +3356,7 @@ body.is-tab-hidden .dot{
     'faq6.q': 'Siamo pre-funding o pre-publisher. Parli con noi lo stesso?',
     'faq6.a': 'Sì. La call conoscitiva non guarda in che stadio siete. Se vi serve costruzione del pitch deck o publisher demo prep, è un servizio a sé. Se davvero non potete permettervi nulla, vi indirizzo alle letture giuste o alle persone giuste, senza vincoli.',
 
-    /* Testimonials: le citazioni restano volutamente in inglese (testi1.q..testi5.q
+    /* Testimonials: le citazioni restano volutamente in inglese (testi1.q..testi6.q
        non hanno voce nel dizionario, quindi resta l'originale del DOM) */
     'testimonials.kicker': '<span class="num">04</span> Testimonianze',
     'testimonials.h': 'Cosa significa <em>lavorare con me</em>.',
@@ -3357,6 +3365,7 @@ body.is-tab-hidden .dot{
     'testi3.role': 'Senior Community Marketing Manager presso Raw Fury',
     'testi4.role': 'Head of Scouting presso Raw Fury',
     'testi5.role': 'QA Director, ex-Rebellion',
+    'testi6.role': 'Videogame Producer presso Untold Games',
     'testi.nav.aria': 'Sfoglia le testimonianze',
     'testi.prev.aria': 'Testimonianza precedente',
     'testi.next.aria': 'Testimonianza successiva',
@@ -3562,7 +3571,7 @@ body.is-tab-hidden .dot{
 
     'faq.note': 'Ce sont mes conditions habituelles. Si votre situation est particulière, on en parle lors de l\'appel — je préfère trouver une formule qui convient plutôt que de passer à côté d\'un bon projet.',
 
-    // Testimonials: les citations restent volontairement en anglais (testi1.q..testi5.q
+    // Testimonials: les citations restent volontairement en anglais (testi1.q..testi6.q
     // absents du dictionnaire, l'original du DOM est conservé)
     'testimonials.kicker': '<span class="num">04</span> Témoignages',
     'testimonials.h': 'Ce que ça fait de <em>travailler avec moi</em>.',
@@ -3571,6 +3580,7 @@ body.is-tab-hidden .dot{
     'testi3.role': 'Senior Community Marketing Manager chez Raw Fury',
     'testi4.role': 'Head of Scouting chez Raw Fury',
     'testi5.role': 'QA Director, ex-Rebellion',
+    'testi6.role': 'Videogame Producer chez Untold Games',
     'testi.nav.aria': 'Parcourir les témoignages',
     'testi.prev.aria': 'Témoignage précédent',
     'testi.next.aria': 'Témoignage suivant',
@@ -3741,7 +3751,7 @@ body.is-tab-hidden .dot{
     'faq5.a': 'Sí. Nueve años en la industria han construido una red de estudios de confianza, porting houses, socios de QA, equipos de audio y vendors de localización. Los presento, los informo y los coordino como parte del engagement. Sin comisiones de ningún lado.',
     'faq6.q': 'Somos pre-funding o no tenemos publisher. ¿Hablarás con nosotros igualmente?',
     'faq6.a': 'Sí. La llamada de descubrimiento no mira en qué fase estás. Si necesitas estructurar un pitch deck o preparar una publisher demo, es un servicio en sí mismo. Si realmente no puedes permitirte nada todavía, te oriento hacia las lecturas correctas o las personas correctas, sin ataduras.',
-    /* Testimonials: las citas se mantienen a propósito en inglés (testi1.q..testi5.q
+    /* Testimonials: las citas se mantienen a propósito en inglés (testi1.q..testi6.q
        no figuran en el diccionario, se conserva el original del DOM) */
     'testimonials.kicker': '<span class="num">04</span> Testimonios',
     'testimonials.h': 'Cómo es <em>trabajar conmigo</em>.',
@@ -3750,6 +3760,7 @@ body.is-tab-hidden .dot{
     'testi3.role': 'Senior Community Marketing Manager en Raw Fury',
     'testi4.role': 'Head of Scouting en Raw Fury',
     'testi5.role': 'QA Director, ex-Rebellion',
+    'testi6.role': 'Videogame Producer en Untold Games',
     'testi.nav.aria': 'Explorar los testimonios',
     'testi.prev.aria': 'Testimonio anterior',
     'testi.next.aria': 'Testimonio siguiente',
