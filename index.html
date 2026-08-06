@@ -2336,6 +2336,15 @@ body.is-tab-hidden .dot{
   ]
 }
 </script>
+<style>
+/* Touch targets: on coarse pointers (touch, stylus) every control clears the
+   44px floor. Fine pointers keep the DESIGN.md component paddings unchanged. */
+@media (pointer: coarse){
+  .nav a,
+  .theme-toggle button,
+  .lang-toggle button{ min-height: 44px; }
+}
+</style>
 </head>
 <body>
 

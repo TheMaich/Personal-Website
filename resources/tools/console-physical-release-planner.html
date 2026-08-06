@@ -1733,7 +1733,9 @@ html[data-theme="light"] .bg-aurora .blob{ opacity: 0.35; }
 @media (min-width:641px){ .sim-modal{ display:none !important; } }
 </style>
 <style>
-/* Book a call header pill: pulse ring on the button, shimmer sweep on the label text, offset cycles */
+/* Book a call header pill: pulse ring on the button, shimmer sweep on the label text, offset cycles.
+   Highlight is var(--clay), not a hardcoded white: the sweep stays legible in both themes
+   (10.19:1 dark, 4.74:1 light) and keeps the brand mustard as the only chromatic accent. */
 .nav a.book-call-cta{
   position: relative;
   animation: book-call-pulse 4s var(--ease) infinite;
@@ -1746,8 +1748,8 @@ html[data-theme="light"] .bg-aurora .blob{ opacity: 0.35; }
 .nav a.book-call-cta span:not(.num){
   background-image: linear-gradient(105deg,
     var(--ink-2) 0%, var(--ink-2) 40%,
-    color-mix(in srgb, white 85%, var(--clay) 15%) 45%,
-    color-mix(in srgb, white 85%, var(--clay) 15%) 55%,
+    var(--clay) 45%,
+    var(--clay) 55%,
     var(--ink-2) 60%, var(--ink-2) 100%);
   background-size: 300% 100%;
   background-position: 100% 0;
@@ -1782,6 +1784,16 @@ html[data-theme="light"] .bg-aurora .blob{ opacity: 0.35; }
     color: inherit;
     animation: none;
   }
+}
+</style>
+<style>
+/* Touch targets: on coarse pointers (touch, stylus) every control clears the
+   44px floor. Fine pointers keep the DESIGN.md component paddings unchanged. */
+@media (pointer: coarse){
+  .nav a,
+  .theme-toggle button,
+  .calc-copy-btn,
+  .seg-btn{ min-height: 44px; }
 }
 </style>
 </head>
