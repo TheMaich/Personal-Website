@@ -17,6 +17,9 @@ desktop.ini
 assets-raw/
 docs/
 
+# Generated knowledge graph (graphify)
+graphify-out/
+
 # Backup files
 *.bak
 *~
