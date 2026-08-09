@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { cx } from "../utils";
 
 export interface SpritzRootProps {
@@ -11,6 +11,7 @@ export interface SpritzRootProps {
   /** Render the drifting clay aurora washes behind content. */
   aurora?: boolean;
   className?: string;
+  style?: CSSProperties;
 }
 
 /**
@@ -26,9 +27,10 @@ export function SpritzRoot({
   grain = false,
   aurora = false,
   className,
+  style,
 }: SpritzRootProps) {
   return (
-    <div className={cx("spz-root", className)} data-theme={theme}>
+    <div className={cx("spz-root", className)} data-theme={theme} style={style}>
       {aurora && (
         <div className="spz-aurora" aria-hidden="true">
           <div className="spz-aurora-blob spz-aurora-blob--1" />

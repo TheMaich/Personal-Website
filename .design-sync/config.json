@@ -3,7 +3,23 @@
   "pkg": "@spritz/design-system",
   "globalName": "SpritzDS",
   "shape": "package",
-  "srcDir": "design-system/src",
   "buildCmd": "npm run build --prefix design-system",
-  "cssEntry": "design-system/dist/styles.css"
+  "srcDir": "src",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": "dist/styles.css",
+  "readmeHeader": ".design-sync/conventions.md",
+  "provider": {
+    "component": "SpritzRoot",
+    "props": { "theme": "dark", "style": { "padding": "24px" } }
+  },
+  "overrides": {
+    "Testimonial": { "cardMode": "column" },
+    "ServiceCard": { "cardMode": "column" },
+    "Marquee": { "cardMode": "column" },
+    "ResourceRow": { "cardMode": "column" },
+    "StatRail": { "cardMode": "column" },
+    "CtaCard": { "cardMode": "column" },
+    "Section": { "cardMode": "column" },
+    "ResultPanel": { "cardMode": "column" }
+  }
 }

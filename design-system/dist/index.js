@@ -10,9 +10,10 @@ function SpritzRoot({
   theme = "dark",
   grain = false,
   aurora = false,
-  className
+  className,
+  style
 }) {
-  return /* @__PURE__ */ jsxs("div", { className: cx("spz-root", className), "data-theme": theme, children: [
+  return /* @__PURE__ */ jsxs("div", { className: cx("spz-root", className), "data-theme": theme, style, children: [
     aurora && /* @__PURE__ */ jsxs("div", { className: "spz-aurora", "aria-hidden": "true", children: [
       /* @__PURE__ */ jsx("div", { className: "spz-aurora-blob spz-aurora-blob--1" }),
       /* @__PURE__ */ jsx("div", { className: "spz-aurora-blob spz-aurora-blob--2" })

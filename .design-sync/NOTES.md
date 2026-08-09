@@ -1,11 +1,37 @@
 # design-sync notes — Spritz Consulting
 
-## Status: PAUSED mid-first-sync (2026-08-10)
+## Status: first sync completed 2026-08-10
 
-The React component library exists, is built, and is committed. **Nothing has
-been uploaded to Claude Design yet.** The project is still empty, which is the
-documented safe state — a future run re-verifies everything from scratch and
-nothing can silently rot.
+33 exports imported; 15 with authored preview cards, 18 on the floor card
+(authorable incrementally on any later re-sync).
+
+## Verification level — READ THIS FIRST on re-sync
+
+**Playwright was deliberately not installed** (user declined the ~200MB
+download). Consequences, both expected, neither a defect to chase:
+
+- `package-validate.mjs` must be run with `--no-render-check`, and prints
+  `[RENDER_SKIPPED]`. Renders are not machine-verified.
+- `package-capture.mjs` **cannot run at all** (`playwright not installed`), so
+  the driver's capture stage exits 2 and `.resync-verdict.json` reports
+  `ok: false` **even when build + diff + validate all pass**. Check
+  `stages.*.ok` individually rather than trusting the top-level `ok`.
+- There are therefore **no `.grade.json` verdicts**. Cards were verified by
+  eye instead (agent-driven Chrome + the user reviewing `.review.html`).
+
+Installing playwright in `.ds-sync/` at any later point upgrades all of this
+and makes the normal graded flow work.
+
+### Known render warns (expected — don't treat as new)
+
+- `[FONT_MISSING]` for **SF Pro Text / SF Pro Display / Impact /
+  Haettenschweiler / Arial Narrow**. These are the *fallback tiers* of
+  `--spz-sans` and `--spz-mono`, exactly as `index.html` declares them. Both
+  **brand** faces (Bricolage Grotesque, Bebas Neue) ship as woff2 and are
+  verified loading. SF Pro is Apple-licensed and must not be redistributed —
+  the system stack resolving it natively on macOS is the intended behaviour.
+  Do **not** "fix" this by shipping substitutes.
+- `[RENDER_SKIPPED]` — see above.
 
 ## What this repo is
 
@@ -44,27 +70,43 @@ explicit decision.
 - Preview harness used during authoring: `design-system/preview/` + a static
   server from the repo root (the demo references `/assets/*.png`).
 
-## Config status
+## Config — verified working
 
-`.design-sync/config.json` is a **draft written at pause time and never run
-through the converter** — treat its paths as unverified. In particular
-`srcDir` / `cssEntry` are repo-root-relative here; the converter may want them
-package-relative with `--node-modules design-system/node_modules` and
-`--entry ./design-system/dist/index.js`. Expect to fix these on first run.
+`cfg` path fields resolve against the **package dir** (`design-system/`), not
+the repo root. The working invocation, from the repo root:
+
+```sh
+node .ds-sync/resync.mjs --config .design-sync/config.json \
+  --node-modules design-system/node_modules \
+  --entry design-system/dist/index.js --out ./ds-bundle --no-render-check
+```
+
+- `--entry` is required: npm won't self-install the package into its own
+  `node_modules`, so there's no `node_modules/@spritz/design-system` to resolve.
+- `cfg.provider` is **`SpritzRoot`** and is load-bearing. All tokens are scoped
+  to `.spz-root`; without the provider every card renders unstyled. The
+  `style: {padding}` prop on it is preview cosmetics only.
+- `cfg.overrides.*.cardMode = "column"` is set for the wide components
+  (Testimonial, ServiceCard, Marquee, ResourceRow, StatRail, CtaCard, Section,
+  ResultPanel). Testimonial in particular is unreadable in a 2-up grid cell —
+  its quote column gets squeezed out. Don't remove these.
 
 `projectId` points at the pre-existing **empty** project named "Design System"
 (user's explicit choice over creating a new one).
 
-## Where to resume
+## Preview authoring
 
-1. `npm install --prefix design-system` (+ approve esbuild scripts), then
-   `npm run build --prefix design-system`.
-2. Stage the converter scripts into `.ds-sync/` per the skill's §2.7 and run
-   `package-build.mjs` → `package-validate.mjs`; fix the config paths above.
-3. Playwright + chromium (~200MB) is **not installed** — the render check needs
-   it. Ask before installing.
-4. Author `.design-sync/previews/<Name>.tsx` for the 22 exports, grade, review,
-   write `conventions.md`, then upload.
+15 authored in `.design-sync/previews/`: Button, Chip, Section, ServiceCard,
+FaqItem, Testimonial, ResultPanel, CalculatorInput, CtaCard, ResourceRow,
+StatRail, Marquee, Kicker, LogoTile, TldrCard.
+
+- Previews that need imagery use **inline SVG data-URI wordmarks**, not files
+  from `/assets` — the repo's logo PNGs aren't part of the package and would
+  render broken in the cards.
+- `LogoTile`'s floor card renders a *broken image* rather than the typographic
+  block (its crash-prevention `src` doesn't resolve), which is why it was
+  authored despite not being in the original core-12 scope. Any future
+  image-prop component will have the same problem — author it.
 
 ## Re-sync risks
 

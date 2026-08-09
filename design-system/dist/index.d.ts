@@ -1,5 +1,5 @@
 import * as react from 'react';
-import { ReactNode, AnchorHTMLAttributes, ButtonHTMLAttributes, InputHTMLAttributes, TextareaHTMLAttributes, FormHTMLAttributes, SVGProps } from 'react';
+import { ReactNode, CSSProperties, AnchorHTMLAttributes, ButtonHTMLAttributes, InputHTMLAttributes, TextareaHTMLAttributes, FormHTMLAttributes, SVGProps } from 'react';
 
 interface SpritzRootProps {
     /** Page content. Every other Spritz component must render inside this. */
@@ -11,6 +11,7 @@ interface SpritzRootProps {
     /** Render the drifting clay aurora washes behind content. */
     aurora?: boolean;
     className?: string;
+    style?: CSSProperties;
 }
 /**
  * Root wrapper for the Spritz design system.
@@ -19,7 +20,7 @@ interface SpritzRootProps {
  * from this element, so anything rendered outside it is unstyled. Wrap the
  * whole page (or the whole preview) in exactly one SpritzRoot.
  */
-declare function SpritzRoot({ children, theme, grain, aurora, className, }: SpritzRootProps): react.JSX.Element;
+declare function SpritzRoot({ children, theme, grain, aurora, className, style, }: SpritzRootProps): react.JSX.Element;
 interface WrapProps {
     children: ReactNode;
     className?: string;
