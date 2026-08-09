@@ -1,0 +1,50 @@
+{
+  "name": "@spritz/design-system",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Spritz Consulting design system — React components extracted from the production site.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./styles.css": "./dist/styles.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "npm run build:js && npm run build:css",
+    "build:js": "tsup",
+    "build:css": "esbuild src/styles/index.css --bundle --loader:.css=css --loader:.woff2=file --asset-names=fonts/[name] --outfile=dist/styles.css",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "esbuild": "^0.25.10",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true,
+    "esbuild@0.27.7": true
+  }
+}

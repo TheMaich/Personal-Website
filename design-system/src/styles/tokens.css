@@ -1,0 +1,63 @@
+/* Spritz design tokens.
+   Scoped to .spz-root so the library can be dropped into any page without
+   owning :root. Values are ported verbatim from the production site's
+   index.html and DESIGN.json — do not drift them independently. */
+
+.spz-root {
+  /* Type + easing (theme-invariant) */
+  --spz-sans: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI Variable Text", "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --spz-mono: "Bebas Neue", "Impact", "Haettenschweiler", "Arial Narrow", sans-serif;
+  --spz-serif: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
+  --spz-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Dark theme (default) — mustard on near-black */
+  --spz-paper: #0a0b0e;
+  --spz-paper-2: #12141a;
+  --spz-paper-3: #1a1d25;
+  --spz-ink: #eceff6;
+  --spz-ink-2: #8e95a4;
+  --spz-ink-3: #5c6272;
+  --spz-rule: #262a33;
+  --spz-rule-soft: #1c1f27;
+  --spz-clay: #e5b415;
+  --spz-clay-deep: #c4970a;
+  --spz-clay-soft: #2a1f05;
+  --spz-accent-2: #ff2ec8;
+  --spz-danger: #ff2ec8;
+  --spz-success: #62c28a;
+  --spz-portrait-bg: #e5b415;
+  --spz-err-bg: #2a1020;
+  --spz-grain-blend: screen;
+  --spz-grain-opacity: 0.05;
+  --spz-shadow-sm: 0 1px 0 rgba(0, 0, 0, 0.55), 0 2px 8px -2px rgba(229, 180, 21, 0.22);
+  --spz-shadow-md: 0 1px 0 rgba(0, 0, 0, 0.55), 0 20px 50px -20px rgba(229, 180, 21, 0.26);
+
+  /* Radii + spacing steps used across the system */
+  --spz-radius-sm: 8px;
+  --spz-radius-md: 12px;
+  --spz-radius-lg: 18px;
+  --spz-radius-pill: 999px;
+}
+
+.spz-root[data-theme="light"] {
+  --spz-paper: #f4f3ed;
+  --spz-paper-2: #e9e7de;
+  --spz-paper-3: #fbfaf4;
+  --spz-ink: #0a0b0e;
+  --spz-ink-2: #4a4e58;
+  --spz-ink-3: #5f6168;
+  --spz-rule: #cfcdc2;
+  --spz-rule-soft: #dcdad0;
+  --spz-clay: #8a6600;
+  --spz-clay-deep: #6b5000;
+  --spz-clay-soft: #f3e4a8;
+  --spz-accent-2: #be1383;
+  --spz-danger: #be1383;
+  --spz-success: #1f6b3d;
+  --spz-portrait-bg: #e5b415; /* theme-invariant by design */
+  --spz-err-bg: #ffe7f3;
+  --spz-grain-blend: multiply;
+  --spz-shadow-sm: 0 1px 0 rgba(10, 11, 14, 0.07), 0 2px 6px -2px rgba(138, 102, 0, 0.12);
+  --spz-shadow-md: 0 1px 0 rgba(10, 11, 14, 0.07), 0 18px 40px -20px rgba(138, 102, 0, 0.22);
+}

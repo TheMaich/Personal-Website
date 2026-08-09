@@ -1,0 +1,175 @@
+/* ---- Field ----------------------------------------------------------- */
+
+.spz-field {
+  display: grid;
+  gap: 6px;
+}
+
+.spz-field--wide { grid-column: 1 / -1; }
+
+.spz-field-label {
+  font-family: var(--spz-mono);
+  font-size: 13.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--spz-ink-2);
+}
+
+.spz-field-req {
+  color: var(--spz-clay);
+  margin-left: 2px;
+}
+
+.spz-field input,
+.spz-field textarea {
+  font: 400 16px/1.4 var(--spz-sans);
+  color: var(--spz-ink);
+  background: var(--spz-paper);
+  border: 1px solid var(--spz-rule);
+  border-radius: var(--spz-radius-sm);
+  padding: 12px 14px;
+  width: 100%;
+  transition: border-color 0.2s var(--spz-ease), box-shadow 0.2s var(--spz-ease),
+    background 0.2s var(--spz-ease);
+}
+
+.spz-field input::placeholder,
+.spz-field textarea::placeholder { color: var(--spz-ink-3); }
+
+.spz-field input:focus,
+.spz-field textarea:focus {
+  border-color: var(--spz-clay);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spz-clay) 25%, transparent);
+  background: var(--spz-paper-3);
+  outline: 0;
+}
+
+.spz-field textarea {
+  resize: vertical;
+  min-height: 130px;
+}
+
+.spz-field[data-error="true"] input,
+.spz-field[data-error="true"] textarea {
+  border-color: var(--spz-danger);
+  background: var(--spz-err-bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--spz-danger) 22%, transparent);
+}
+
+.spz-field-err {
+  font-family: var(--spz-mono);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--spz-danger);
+  min-height: 14px;
+}
+
+/* ---- Form shell ------------------------------------------------------ */
+
+.spz-form {
+  background: var(--spz-paper-3);
+  border: 1px solid var(--spz-rule);
+  border-radius: var(--spz-radius-lg);
+  padding: clamp(22px, 2.4vw, 32px);
+  box-shadow: 0 0 32px 6px transparent, 0 0 90px 16px transparent, var(--spz-shadow-md);
+  transition: box-shadow 2.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.spz-form:hover {
+  box-shadow: 0 0 32px 6px color-mix(in srgb, var(--spz-clay) 10%, transparent),
+    0 0 90px 16px color-mix(in srgb, var(--spz-clay) 6%, transparent), var(--spz-shadow-md);
+}
+
+.spz-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 16px;
+}
+
+.spz-form-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+
+.spz-form-foot small {
+  font-family: var(--spz-mono);
+  font-size: 14.5px;
+  color: var(--spz-ink-3);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .spz-form-grid { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spz-form { transition: none; }
+}
+
+/* ---- CalculatorInput ------------------------------------------------- */
+
+.spz-calc-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.spz-calc-label {
+  font-family: var(--spz-serif);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 28px);
+  font-variation-settings: "opsz" 32;
+  letter-spacing: -0.015em;
+  color: var(--spz-ink);
+  line-height: 1.15;
+}
+
+.spz-calc-hint {
+  font-size: 15px;
+  color: var(--spz-ink-2);
+  line-height: 1.6;
+}
+
+.spz-calc-input-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--spz-paper-2);
+  border: 1px solid var(--spz-rule);
+  border-radius: var(--spz-radius-sm);
+  overflow: hidden;
+  transition: border-color 0.2s var(--spz-ease);
+}
+
+.spz-calc-input-wrap:focus-within { border-color: var(--spz-clay); }
+
+.spz-calc-affix {
+  padding: 14px 16px;
+  font-family: var(--spz-mono);
+  font-size: 14px;
+  color: var(--spz-ink-3);
+  background: var(--spz-paper-3);
+  flex-shrink: 0;
+}
+
+.spz-calc-affix--prefix { border-right: 1px solid var(--spz-rule); }
+.spz-calc-affix--suffix { border-left: 1px solid var(--spz-rule); }
+
+.spz-calc-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 14px 16px;
+  font-family: var(--spz-sans);
+  font-size: 16px;
+  color: var(--spz-ink);
+  width: 100%;
+}
+
+.spz-calc-input::placeholder { color: var(--spz-ink-3); }

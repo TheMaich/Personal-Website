@@ -20,6 +20,16 @@ docs/
 # Generated knowledge graph (graphify)
 graphify-out/
 
+# Design system package
+design-system/node_modules/
+design-system/preview/demo.js
+design-system/preview/demo.css
+design-system/preview/fonts/
+
+# design-sync converter working dirs
+.ds-sync/
+ds-bundle/
+
 # Backup files
 *.bak
 *~

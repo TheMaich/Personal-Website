@@ -1,0 +1,230 @@
+/* ---- Button ---------------------------------------------------------- */
+
+.spz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 22px;
+  font-family: var(--spz-sans);
+  font-weight: 500;
+  font-size: 14.5px;
+  letter-spacing: 0.01em;
+  border-radius: var(--spz-radius-pill);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s var(--spz-ease), background-color 0.25s var(--spz-ease),
+    color 0.25s var(--spz-ease), border-color 0.25s var(--spz-ease),
+    box-shadow 0.25s var(--spz-ease);
+  will-change: transform;
+}
+
+.spz-btn .spz-arrow { transition: transform 0.3s var(--spz-ease); }
+.spz-btn:hover .spz-arrow { transform: translateX(3px); }
+.spz-btn:active { transform: translateY(1px); }
+
+.spz-btn--primary {
+  background: var(--spz-clay);
+  color: var(--spz-paper);
+  box-shadow: var(--spz-shadow-sm);
+}
+.spz-btn--primary:hover { background: var(--spz-clay-deep); color: var(--spz-paper); }
+
+.spz-btn--ghost {
+  border-color: var(--spz-rule);
+  color: var(--spz-ink);
+  background: transparent;
+}
+.spz-btn--ghost:hover { border-color: var(--spz-clay); color: var(--spz-clay); }
+
+.spz-btn[aria-disabled="true"],
+.spz-btn:disabled {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* ---- Kicker ---------------------------------------------------------- */
+
+.spz-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--spz-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--spz-ink-2);
+}
+
+.spz-kicker-bar {
+  width: 28px;
+  height: 1px;
+  background: var(--spz-clay);
+}
+
+.spz-kicker-num {
+  color: var(--spz-clay);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.spz-root[data-theme="light"] .spz-kicker-bar { background: var(--spz-accent-2); }
+.spz-root[data-theme="light"] .spz-kicker-num { color: var(--spz-accent-2); }
+
+/* ---- Chip ------------------------------------------------------------ */
+/* Three variants share the pill geometry but differ in type and active fill:
+   - default: sans, paper-3 surface, clay border on hover (related-resource chips)
+   - preset:  Bebas, clay fill when active (calculator presets)
+   - filter:  sans 600, ink fill when active (resource filter tablist) */
+
+.spz-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--spz-radius-pill);
+  white-space: nowrap;
+  cursor: pointer;
+  border: 1px solid var(--spz-rule);
+  background: var(--spz-paper-3);
+  color: var(--spz-ink);
+  transition: border-color 0.2s var(--spz-ease), color 0.2s var(--spz-ease),
+    background 0.2s var(--spz-ease);
+}
+
+.spz-chip--default {
+  padding: 8px 14px;
+  font-family: var(--spz-sans);
+  font-size: 13.5px;
+}
+.spz-chip--default:hover { border-color: var(--spz-clay); color: var(--spz-clay); }
+
+.spz-chip--preset {
+  font-family: var(--spz-mono);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  padding: 10px 18px;
+  min-height: 40px;
+}
+.spz-chip--preset:hover {
+  border-color: color-mix(in srgb, var(--spz-clay) 70%, var(--spz-rule));
+  background: color-mix(in srgb, var(--spz-clay) 8%, var(--spz-paper-3));
+  color: var(--spz-clay);
+}
+.spz-chip--preset.is-active {
+  border-color: var(--spz-clay);
+  background: var(--spz-clay);
+  color: var(--spz-paper);
+}
+
+.spz-chip--filter {
+  padding: 13px 32px;
+  font-family: var(--spz-sans);
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.005em;
+  background: transparent;
+}
+.spz-chip--filter:hover { color: var(--spz-ink); border-color: var(--spz-ink-3); }
+.spz-chip--filter.is-active {
+  background: var(--spz-ink);
+  color: var(--spz-paper);
+  border-color: var(--spz-ink);
+}
+
+/* Segmented group — the pill-in-a-pill bar used for filters and presets. */
+.spz-chip-group {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.spz-chip-group--segmented {
+  padding: 5px;
+  border: 1px solid var(--spz-rule);
+  border-radius: var(--spz-radius-pill);
+  background: var(--spz-paper-3);
+  flex-wrap: nowrap;
+}
+
+/* ---- LogoTile -------------------------------------------------------- */
+
+.spz-logo-tile {
+  flex: 0 0 auto;
+  height: 104px;
+  min-width: 184px;
+  display: grid;
+  place-items: center;
+  padding: 18px 28px;
+  background: var(--spz-paper-3);
+  border: 1px solid var(--spz-rule);
+  border-radius: 14px;
+  transition: transform 0.3s var(--spz-ease), border-color 0.3s var(--spz-ease);
+}
+
+.spz-logo-tile:hover {
+  border-color: var(--spz-clay);
+  transform: translateY(-2px);
+}
+
+.spz-logo-tile img {
+  max-height: 60px;
+  max-width: 150px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.spz-logo-tile--bare {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  min-width: 0;
+  box-shadow: none;
+}
+.spz-logo-tile--bare img {
+  height: 104px;
+  width: auto;
+  max-width: none;
+  max-height: none;
+  border-radius: var(--spz-radius-md);
+}
+
+/* ---- MetaRow / MetaList ---------------------------------------------- */
+
+.spz-meta-list {
+  display: grid;
+  gap: 14px;
+  padding-top: 20px;
+  border-top: 1px solid var(--spz-rule);
+  margin: 0;
+}
+
+.spz-meta-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 14px;
+  align-items: baseline;
+  font-size: 14px;
+}
+
+.spz-meta-row dt {
+  font-family: var(--spz-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--spz-ink-3);
+}
+
+.spz-meta-row dd {
+  margin: 0;
+  color: var(--spz-ink);
+}
+
+.spz-meta-row dd em {
+  font-style: normal;
+  color: var(--spz-clay);
+  font-weight: 500;
+}
+
+@media (max-width: 520px) {
+  .spz-meta-row { grid-template-columns: 1fr; gap: 2px; }
+}
