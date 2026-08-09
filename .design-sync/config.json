@@ -1,0 +1,9 @@
+{
+  "projectId": "fff17b62-0003-4e59-a487-84d68f3bc587",
+  "pkg": "@spritz/design-system",
+  "globalName": "SpritzDS",
+  "shape": "package",
+  "srcDir": "design-system/src",
+  "buildCmd": "npm run build --prefix design-system",
+  "cssEntry": "design-system/dist/styles.css"
+}
