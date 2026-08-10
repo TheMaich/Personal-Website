@@ -146,7 +146,7 @@
   IT: 01 La Mia Esperienza
   ────────────────────────────────────────
   key: about.h
-  EN: Studio side, publisher side, and everything in the middle.
+  EN: Studio side, publisher side, and everything in between.
   IT: Lato studio, lato publisher, e tutto quello che c'è in mezzo.
   ────────────────────────────────────────
   key: about.p1
