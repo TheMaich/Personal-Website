@@ -1,36 +1,29 @@
 {
   "./index.html": {
     "path": "./index.html",
-    "words": 1560,
-    "sentences": 107,
-    "first_person": 33,
-    "fp_per_1000": 21.15,
-    "second_person": 28,
+    "words": 1576,
+    "sentences": 108,
+    "first_person": 36,
+    "fp_per_1000": 22.84,
+    "second_person": 32,
     "len_mean": 15.3,
-    "len_stdev": 14.0,
-    "triplets": 18,
+    "len_stdev": 13.96,
+    "triplets": 15,
     "templates": 0,
-    "pivots": 2,
+    "pivots": 1,
     "findings": {
-      "false_range": [
-        "From AAA to single-developer indie teams."
-      ],
       "negation_pivot": [
-        "does not.",
         "not only a way to solve it, but"
       ],
       "rule_of_three_advisory": [
         "orgs and games I've worked with\n01 My Experience\nStudio side, publisher side, everything i",
         "Now, Independent Producer, Co-founder of Scuola Nash and juror at Indie Arena Booth",
+        "QA, production, publishing",
         "Project by project, on retainer, as a focused audit",
         "documentation, and budgets, from pre-production all the way to gold master",
-        "peer review\nPlatform & Release Management\n+\nClean releases, every platform, every market",
         "launch logistics, external QA, localisation",
         "Console certification (PS, Xbox, Switch)\nDigital store setup & submissions\nLaunch logistic",
-        "the experience, and an honest view on how to reach the players, without becoming your publ",
         "replication, rating boards, all on different timelines",
-        "Where the design holds, where it leaks players, what to prototype before greenlighting mor",
-        "We play the build, write the review you'd wish you had at launch, flag what reviewers will",
         "Who keeps the IP, the documentation, the processes after you leave?\n+\nYou do",
         "GDD reviews, pipelines, cert prep) stays with you",
         "external QA, audio, localisation?\n+\nYes",
@@ -147,49 +140,31 @@
   },
   "./resources/publisher-pitch-risks.html": {
     "path": "./resources/publisher-pitch-risks.html",
-    "words": 1268,
-    "sentences": 76,
-    "first_person": 4,
-    "fp_per_1000": 3.15,
-    "second_person": 8,
-    "len_mean": 16.9,
-    "len_stdev": 10.04,
-    "triplets": 6,
-    "templates": 11,
-    "pivots": 4,
+    "words": 1452,
+    "sentences": 85,
+    "first_person": 11,
+    "fp_per_1000": 7.58,
+    "second_person": 12,
+    "len_mean": 17.3,
+    "len_stdev": 9.76,
+    "triplets": 5,
+    "templates": 3,
+    "pivots": 0,
     "findings": {
       "than_one_that": [
-        "than one that",
-        "than one that",
-        "than one that",
         "than one that"
       ],
       "template_opener": [
-        ". A game with",
-        ". A deck that",
-        "? A game that",
-        ".\nA team pushing",
-        ". A deck that",
-        ". A team that",
-        ". A team that",
-        ". A team pitching",
-        ".\nA team that",
         ".\nA deck with",
-        ".\nA deck that"
-      ],
-      "negation_pivot": [
-        ". Not as",
-        ". Not on",
-        "? Not separately",
-        "though not"
+        ".\nA deck that",
+        ".\nA team that"
       ],
       "rule_of_three_advisory": [
         "For another it's the writing, or the visual identity, the pacing of the mid-game",
+        "and I have watched that arithmetic get done out loud, in about thirty seconds, in a meetin",
         "custom engine work, large open worlds, procedural generation at scale",
-        "A team pushing an engine well beyond its comfortable range, or implementing a technology t",
-        "Has this team shipped something of similar scope before, in this engine, together? Not sep",
-        "A team that has shipped once, even something small, has already solved most of the hard co",
-        "commercial opportunity, creative risk, technical risk"
+        "in this engine, together? Together, on something that actually shipped",
+        "commercial opportunity, technical risk, team execution"
       ]
     }
   },
