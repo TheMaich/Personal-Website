@@ -1,0 +1,243 @@
+{
+  "./index.html": {
+    "path": "./index.html",
+    "words": 1560,
+    "sentences": 107,
+    "first_person": 33,
+    "fp_per_1000": 21.15,
+    "second_person": 28,
+    "len_mean": 15.3,
+    "len_stdev": 14.0,
+    "triplets": 18,
+    "templates": 0,
+    "pivots": 2,
+    "findings": {
+      "false_range": [
+        "From AAA to single-developer indie teams."
+      ],
+      "negation_pivot": [
+        "does not.",
+        "not only a way to solve it, but"
+      ],
+      "rule_of_three_advisory": [
+        "orgs and games I've worked with\n01 My Experience\nStudio side, publisher side, everything i",
+        "Now, Independent Producer, Co-founder of Scuola Nash and juror at Indie Arena Booth",
+        "Project by project, on retainer, as a focused audit",
+        "documentation, and budgets, from pre-production all the way to gold master",
+        "peer review\nPlatform & Release Management\n+\nClean releases, every platform, every market",
+        "launch logistics, external QA, localisation",
+        "Console certification (PS, Xbox, Switch)\nDigital store setup & submissions\nLaunch logistic",
+        "the experience, and an honest view on how to reach the players, without becoming your publ",
+        "replication, rating boards, all on different timelines",
+        "Where the design holds, where it leaks players, what to prototype before greenlighting mor",
+        "We play the build, write the review you'd wish you had at launch, flag what reviewers will",
+        "Who keeps the IP, the documentation, the processes after you leave?\n+\nYou do",
+        "GDD reviews, pipelines, cert prep) stays with you",
+        "external QA, audio, localisation?\n+\nYes",
+        "QA partners, audio teams, loc vendors",
+        "I introduce, brief, coordinate them as part of the engagement",
+        "If you genuinely can't afford anything yet, I'll point you at the right reading or the rig",
+        "Tell me about the game, the stage it's in, what's getting in the way"
+      ],
+      "ai_vocabulary": [
+        "showcase"
+      ]
+    }
+  },
+  "./resources/index.html": {
+    "path": "./resources/index.html",
+    "words": 230,
+    "sentences": 16,
+    "first_person": 2,
+    "fp_per_1000": 8.7,
+    "second_person": 9,
+    "len_mean": 15.7,
+    "len_stdev": 12.07,
+    "triplets": 3,
+    "templates": 0,
+    "pivots": 0,
+    "findings": {
+      "rule_of_three_advisory": [
+        "Practical writing on publishing contracts, production, platform delivery",
+        "after platform cut, regional pricing, tax and returns",
+        "publisher markup, marketing, services"
+      ]
+    }
+  },
+  "./resources/ip-ownership.html": {
+    "path": "./resources/ip-ownership.html",
+    "words": 708,
+    "sentences": 48,
+    "first_person": 9,
+    "fp_per_1000": 12.71,
+    "second_person": 27,
+    "len_mean": 15.0,
+    "len_stdev": 9.45,
+    "triplets": 5,
+    "templates": 0,
+    "pivots": 0,
+    "findings": {
+      "rule_of_three_advisory": [
+        "exclusive licence covering every exploitation of the work, everywhere in the world, for as",
+        "scope, duration, reversion",
+        "merchandise, and adaptations? The wider the scope, the less you can do with your own game ",
+        "the relationship, the deal structure, what you're getting in return",
+        "scope, duration, reversion"
+      ]
+    }
+  },
+  "./resources/marketing-invoice.html": {
+    "path": "./resources/marketing-invoice.html",
+    "words": 725,
+    "sentences": 56,
+    "first_person": 3,
+    "fp_per_1000": 4.14,
+    "second_person": 25,
+    "len_mean": 13.2,
+    "len_stdev": 8.54,
+    "triplets": 2,
+    "templates": 0,
+    "pivots": 0,
+    "findings": {
+      "rule_of_three_advisory": [
+        "You probably don't have a PR network, a community team, a working relationship with Valve",
+        "a capped marketing budget, written approval rights above a threshold, clarity on what perc"
+      ]
+    }
+  },
+  "./resources/publisher-goes-quiet.html": {
+    "path": "./resources/publisher-goes-quiet.html",
+    "words": 700,
+    "sentences": 56,
+    "first_person": 2,
+    "fp_per_1000": 2.86,
+    "second_person": 22,
+    "len_mean": 12.8,
+    "len_stdev": 10.26,
+    "triplets": 5,
+    "templates": 0,
+    "pivots": 2,
+    "findings": {
+      "negation_pivot": [
+        ". Not because",
+        ". Not pull"
+      ],
+      "rule_of_three_advisory": [
+        "Just not promote it, not invest in it, not take it anywhere new",
+        "And you can't sign elsewhere, can't self-publish, can't port it to a platform they haven't",
+        "Launch plans change, priorities shift, key people leave publishers",
+        "Publisher breach definitions, when they exist at all, tend to be vague",
+        "a publication deadline (12-18 months), a commercial inactivity trigger (12 months off-sale"
+      ]
+    }
+  },
+  "./resources/publisher-pitch-deck-template.html": {
+    "path": "./resources/publisher-pitch-deck-template.html",
+    "words": 156,
+    "sentences": 11,
+    "first_person": 4,
+    "fp_per_1000": 25.64,
+    "second_person": 6,
+    "len_mean": 15.6,
+    "len_stdev": 15.52,
+    "triplets": 0,
+    "templates": 0,
+    "pivots": 0,
+    "findings": {}
+  },
+  "./resources/publisher-pitch-risks.html": {
+    "path": "./resources/publisher-pitch-risks.html",
+    "words": 1268,
+    "sentences": 76,
+    "first_person": 4,
+    "fp_per_1000": 3.15,
+    "second_person": 8,
+    "len_mean": 16.9,
+    "len_stdev": 10.04,
+    "triplets": 6,
+    "templates": 11,
+    "pivots": 4,
+    "findings": {
+      "than_one_that": [
+        "than one that",
+        "than one that",
+        "than one that",
+        "than one that"
+      ],
+      "template_opener": [
+        ". A game with",
+        ". A deck that",
+        "? A game that",
+        ".\nA team pushing",
+        ". A deck that",
+        ". A team that",
+        ". A team that",
+        ". A team pitching",
+        ".\nA team that",
+        ".\nA deck with",
+        ".\nA deck that"
+      ],
+      "negation_pivot": [
+        ". Not as",
+        ". Not on",
+        "? Not separately",
+        "though not"
+      ],
+      "rule_of_three_advisory": [
+        "For another it's the writing, or the visual identity, the pacing of the mid-game",
+        "custom engine work, large open worlds, procedural generation at scale",
+        "A team pushing an engine well beyond its comfortable range, or implementing a technology t",
+        "Has this team shipped something of similar scope before, in this engine, together? Not sep",
+        "A team that has shipped once, even something small, has already solved most of the hard co",
+        "commercial opportunity, creative risk, technical risk"
+      ]
+    }
+  },
+  "./resources/three-things-before-signing.html": {
+    "path": "./resources/three-things-before-signing.html",
+    "words": 772,
+    "sentences": 59,
+    "first_person": 2,
+    "fp_per_1000": 2.59,
+    "second_person": 21,
+    "len_mean": 13.3,
+    "len_stdev": 9.73,
+    "triplets": 5,
+    "templates": 0,
+    "pivots": 0,
+    "findings": {
+      "rule_of_three_advisory": [
+        "console stores similar), taxes, refunds",
+        "localisation, marketing, any markup on the advance",
+        "s licence defines what they can actually do with your game, for how long, on what terms",
+        "whether the deal has structural problems that no relationship, goodwill, handshake agreeme",
+        "check whether it's time-limited, what the publisher can do with your game, what triggers r"
+      ]
+    }
+  },
+  "./resources/what-5050-means.html": {
+    "path": "./resources/what-5050-means.html",
+    "words": 678,
+    "sentences": 55,
+    "first_person": 3,
+    "fp_per_1000": 4.42,
+    "second_person": 23,
+    "len_mean": 12.9,
+    "len_stdev": 9.31,
+    "triplets": 5,
+    "templates": 1,
+    "pivots": 0,
+    "findings": {
+      "template_opener": [
+        ".\nA game that"
+      ],
+      "rule_of_three_advisory": [
+        "QA, localisation, marketing",
+        "Then you subtract the platform cut (Steam takes 30%), taxes, refunds",
+        "their projections, half of their projections, a quarter",
+        "If you are still earlier in the process, before any deal is on the table, start with what ",
+        "localisation, marketing, sometimes a markup on top"
+      ]
+    }
+  }
+}
